@@ -1,0 +1,89 @@
+<svg
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   width="172"
+   height="172"
+   viewBox="0 0 172 172">
+   <defs>
+      <linearGradient
+         id="linearGradient4191">
+         <stop
+            offset="0"
+            style="stop-color:#5e300e" />
+         <stop
+            style="stop-color:#7b390f"
+            offset="0.75955856" />
+         <stop
+            offset="1"
+            style="stop-color:#311503" />
+      </linearGradient>
+      <radialGradient
+         gradientTransform="rotate(180,260,86)"
+         gradientUnits="userSpaceOnUse"
+         r="86"
+         fy="86"
+         fx="434"
+         cy="86"
+         cx="434"
+         id="radialGradient4197"
+         xlink:href="#linearGradient4191" />
+      <linearGradient
+         gradientTransform="rotate(90,43,43)"
+         gradientUnits="userSpaceOnUse"
+         y2="43"
+         x2="86"
+         y1="43"
+         x1="0"
+         id="linearGradient4645"
+         xlink:href="#linearGradient4191" />
+      <linearGradient
+         gradientTransform="rotate(180,43,43)"
+         gradientUnits="userSpaceOnUse"
+         y2="43"
+         x2="86"
+         y1="43"
+         x1="0"
+         id="linearGradient4645-6"
+         xlink:href="#linearGradient4191" />
+   </defs>
+   <path
+      style="fill:url(#radialGradient4197)"
+      d="M 86,172 V 86 H 0 a 86,86 0 0 0 86,86 z" />
+   <path
+      style="fill:none;stroke:#1b0b00;stroke-width:3;stroke-miterlimit:4"
+      d="m 53,86 c 0,18.2254 14.7746,33 33,33" />
+   <path
+      style="fill:none;stroke:#1b0b00;stroke-width:5;stroke-miterlimit:4"
+      d="m 61.5,86 c 0,13.53098 10.96902,24.5 24.5,24.5" />
+   <path
+      style="fill:none;stroke:#1b0b00;stroke-width:1;stroke-miterlimit:4"
+      d="m 70,86 c 0,8.83656 7.16344,16 16,16" />
+   <path
+      style="fill:url(#linearGradient4645-6)"
+      d="M 0,86 H 86 V 0 H 0 Z" />
+   <path
+      style="fill:none;stroke:#1b0b00;stroke-width:3;stroke-miterlimit:4"
+      d="M 53,0 V 86" />
+   <path
+      style="fill:none;stroke:#1b0b00;stroke-width:5;stroke-miterlimit:4"
+      d="M 61.5,0 V 86" />
+   <path
+      style="fill:none;stroke:#1b0b00;stroke-width:1;stroke-miterlimit:4"
+      d="M 70,0 V 86" />
+   <g
+      transform="translate(86,86)">
+      <path
+         style="fill:url(#linearGradient4645)"
+         d="M 86,86 V 0 H 0 v 86 z" />
+      <path
+         style="fill:none;stroke:#1b0b00;stroke-width:3;stroke-miterlimit:4"
+         d="M 0,33 H 86"
+         id="circle4185-0" />
+      <path
+         style="fill:none;stroke:#1b0b00;stroke-width:5;stroke-miterlimit:4"
+         d="M 0,24.5 H 86" />
+      <path
+         style="fill:none;stroke:#1b0b00;stroke-width:1;stroke-miterlimit:4"
+         d="M 0,16 H 86" />
+   </g>
+</svg>

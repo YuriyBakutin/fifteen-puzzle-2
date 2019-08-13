@@ -1,0 +1,28 @@
+<svg
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   viewBox="0 0 86 86"
+   height="86"
+   width="86">
+   <defs>
+      <filter
+         id="filter815"
+         style="color-interpolation-filters:sRGB">
+         <feGaussianBlur stdDeviation="4.0" />
+      </filter>
+      <clipPath
+         id="clipPath834"
+         clipPathUnits="userSpaceOnUse">
+         <rect
+            width="72.48571"
+            height="72.48571"
+            x="2.0953021"
+            y="1.3664886" />
+      </clipPath>
+   </defs>
+   <path
+      clip-path="url(#clipPath834)"
+      transform="matrix(1.1864407,0,0,1.1864407,-2.4859516,-1.6212576)"
+      style="stroke-width:0.84285712;filter:url(#filter815)"
+      d="m -2.5508475,-3.279661 v 86 h 8.017578 V 4.737917 H 83.449153 v -8.017578 z" />
+</svg>

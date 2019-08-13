@@ -1,0 +1,15 @@
+* {
+    margin: 0;
+}
+
+body {
+    background-color: saddlebrown;
+}
+
+.chip {
+    user-select: none;
+}
+
+#playingField {
+    user-select: none;
+}
