@@ -12,7 +12,9 @@ export class GameBoard {
             tagName: 'div',
             parentElement: document.body,
             id: 'gameBoard',
-            cssPropPosition: 'relative'
+            left: '50%',
+            top: '50%'
+            // cssPropPosition: 'relative'
         })
 
         view.renderElement({
@@ -68,7 +70,7 @@ export class GameBoard {
         view.gameField = view.renderElement({
             skinElement: view.skin.gameField,
             tagName: 'div',
-            parentElement: document.body,
+            // parentElement: document.body,
         })
 
         this.backsideBackground = []

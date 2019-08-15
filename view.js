@@ -82,7 +82,9 @@ export const view = {
             zIndex,
             id,
             loopIndexes,
-            cssPropPosition
+            cssPropPosition,
+            top,
+            left
         } = paramObject
 
         // default values:
@@ -105,7 +107,9 @@ export const view = {
         elem.setAttribute('style', `
             ${view.getSizeAndPositionCss(
                 skinElement,
-                loopIndexes
+                loopIndexes,
+                top,
+                left
             )}
             position: ${cssPropPosition};
             z-index: ${zIndex};
@@ -120,27 +124,36 @@ export const view = {
         return elem
     },
 
-    getSizeAndPositionCss(elem, loopIndexes) {
+    getSizeAndPositionCss(elem, loopIndexes, top, left) {
         let result = ''
 
         result += `width: ${this.resolve(elem.width, loopIndexes)}px;
 `
         result += `height: ${this.resolve(elem.height, loopIndexes)}px;
 `
-
-        if ( elem.left || elem.left == 0 ) {
-            result += `left: ${this.resolve(elem.left, loopIndexes)}px;
+        if ( !left ) {
+            if ( elem.left || elem.left == 0 ) {
+                result += `left: ${this.resolve(elem.left, loopIndexes)}px;
 `
+            } else {
+                result += `right: ${this.resolve(elem.right, loopIndexes)}px;
+`
+            }
         } else {
-            result += `right: ${this.resolve(elem.right, loopIndexes)}px;
+            result += `left: ${left};
 `
         }
 
-        if ( elem.top || elem.top == 0 ) {
-            result += `top: ${this.resolve(elem.top, loopIndexes)}px;
+        if ( !top ) {
+            if ( elem.top || elem.top == 0 ) {
+                result += `top: ${this.resolve(elem.top, loopIndexes)}px;
 `
+            } else {
+                result += `bottom: ${this.resolve(elem.bottom, loopIndexes)}px;
+`
+            }
         } else {
-            result += `bottom: ${this.resolve(elem.bottom, loopIndexes)}px;
+            result += `top: ${top};
 `
         }
 
