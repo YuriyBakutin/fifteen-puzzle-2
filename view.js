@@ -19,6 +19,7 @@ export const view = {
     twitchWhenResizeEliminationTimerId: null,
     twitchWhenResizeEliminationTiming: 400, // ms
     gameBoard: null,
+    gameBoardElement: null,
 
     get currentSkinIndex () {
         return localStorage['CurrentSkinIndex'] || 0
@@ -42,28 +43,81 @@ export const view = {
         objectRescale(this.skin)
     },
 
-    resolve(param, loopIndexes) {
-        let { xLoopIndex, yLoopIndex } = loopIndexes || {}
-        const expression = parseInt(param)
-        if ( !Number.isNaN(expression) ) {
-            return expression // This is the number
+    async repaint() {
+        const PORTRAIT = 0
+        const LANDSCAPE = 1
+
+        view.clientWidth = document.documentElement.clientWidth
+        view.clientHeight = document.documentElement.clientHeight
+        view.orientation = view.clientWidth > view.clientHeight ? LANDSCAPE : PORTRAIT
+
+        if ( !view.skinsRef[ view.currentSkinIndex ].orientation[ view.orientation ].url ) {
+            // Toggle orientation:
+            view.orientation = 1 - view.orientation
         }
 
-        let expressionParts = param.split(' ')
-        expressionParts.forEach((expressionPart, i) => {
-            if (
-                expressionPart != '+'
-                && expressionPart != '-'
-                && expressionPart != '*'
-                && expressionPart != '/'
-                && expressionPart != '('
-                && expressionPart != ')'
-            ) {
-                expressionParts[i] = this.resolve(eval(expressionPart), loopIndexes)
-            }
-        })
+        view.skinUrl = './skins/'
+            + view.skinsRef[ view.currentSkinIndex ].orientation[ view.orientation ].url
+            + '/'
 
-        return eval(expressionParts.join(' '))
+        let { skin } = await import(view.skinUrl + 'skin.js')
+
+        view.skin = skin
+
+        let xScale = (view.clientWidth - game.numberOfColumns - 1) / view.resolve(skin.frame.width)
+        let yScale = (view.clientHeight - game.numberOfRows - 1) / view.resolve(skin.frame.height)
+        view.scale = xScale < yScale ? xScale : yScale
+
+        view.rescaleSkin()
+
+        view.gameBoard = new GameBoard()
+    },
+
+    renderElement(paramObject) {
+
+        let {
+            skinElement,
+            tagName,
+            parentElement,
+            zIndex,
+            id,
+            loopIndexes,
+            cssPropPosition
+        } = paramObject
+
+        // default values:
+        cssPropPosition = cssPropPosition || 'absolute'
+        zIndex = zIndex || view.GAME_Z_INDEX
+        tagName = tagName || 'img'
+
+        const elem = document.createElement(tagName)
+
+        if ( tagName == 'img' ) {
+            elem.setAttribute('src',
+                view.skinUrl + skinElement.url
+            )
+        }
+
+        if ( id ) {
+            elem.setAttribute('id', id)
+        }
+
+        elem.setAttribute('style', `
+            ${view.getSizeAndPositionCss(
+                skinElement,
+                loopIndexes
+            )}
+            position: ${cssPropPosition};
+            z-index: ${zIndex};
+        `)
+
+        if ( parentElement ) {
+            parentElement.appendChild(elem)
+        } else {
+            this.gameBoardElement.appendChild(elem)
+        }
+
+        return elem
     },
 
     getSizeAndPositionCss(elem, loopIndexes) {
@@ -93,34 +147,27 @@ export const view = {
         return result
     },
 
-    async repaint() {
-        const PORTRAIT = 0
-        const LANDSCAPE = 1
-
-        view.clientWidth = document.documentElement.clientWidth
-        view.clientHeight = document.documentElement.clientHeight
-        view.orientation = view.clientWidth > view.clientHeight ? LANDSCAPE : PORTRAIT
-
-        if ( !view.skinsRef[ view.currentSkinIndex ].orientation[ view.orientation ].url ) {
-            // Toggle orientation:
-            view.orientation = 1 - view.orientation
+    resolve(param, loopIndexes) {
+        let { xLoopIndex, yLoopIndex } = loopIndexes || {}
+        const expression = parseInt(param)
+        if ( !Number.isNaN(expression) ) {
+            return expression // This is the number
         }
 
-        view.skinUrl = './skins/'
-            + view.skinsRef[ view.currentSkinIndex ].orientation[ view.orientation ].url
-            + '/'
+        let expressionParts = param.split(' ')
+        expressionParts.forEach((expressionPart, i) => {
+            if (
+                expressionPart != '+'
+                && expressionPart != '-'
+                && expressionPart != '*'
+                && expressionPart != '/'
+                && expressionPart != '('
+                && expressionPart != ')'
+            ) {
+                expressionParts[i] = this.resolve(eval(expressionPart), loopIndexes)
+            }
+        })
 
-        let { skin } = await import(view.skinUrl + 'skin.js')
-
-        view.skin = skin
-
-        let xScale = view.clientWidth / view.resolve(skin.frame.width)
-        let yScale = view.clientHeight / view.resolve(skin.frame.height)
-        view.scale = xScale < yScale ? xScale : yScale
-
-        view.rescaleSkin()
-
-        view.gameBoard = new GameBoard()
+        return eval(expressionParts.join(' '))
     }
-
 }
