@@ -29,7 +29,7 @@
    </defs>
    <path
       d="M 0,86 V 0 h 86 v 86 z"
-      style="opacity:1;fill:url(#linearGradient4645)" />
+      style="fill:url(#linearGradient4645)" />
    <path
       d="M 86,33 H 0"
       style="fill:none;stroke:#1b0b00;stroke-width:3;stroke-miterlimit:4" />

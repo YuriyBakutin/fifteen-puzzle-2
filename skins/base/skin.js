@@ -3,33 +3,34 @@ export const skin = {
         width: 'view.skin.chip.size * game.numberOfColumns',
         height: 'view.skin.chip.size * game.numberOfRows',
         left: 'view.skin.frame.leftLineTile.width',
-        top: 'view.skin.frame.topLineTile.height'
-    },
-    frame: {
-        width: 'view.skin.frame.topLineTile.width + view.skin.chip.size * game.numberOfColumns + view.skin.frame.rightLineTile.width',
-        height: 'view.skin.frame.topLineTile.height + view.skin.chip.size * game.numberOfRows + view.skin.frame.bottomLineTile.height',
-        left: 0,
-        top: 0,
+        top: 'view.skin.frame.topLineTile.height',
         topLeftShadowCorner: {
             url: 'top-left-shadow-corner.svg',
             width: 'view.skin.chip.size',
             height: 'view.skin.chip.size',
-            left: 'view.skin.frame.leftLineTile.width',
-            top: 'view.skin.frame.topLineTile.height'
+            left: 0,
+            top: 0
         },
         leftShadowLine: {
             url: 'left-shadow-line.svg',
             width: 'view.skin.chip.size',
             height: 'view.skin.chip.size',
-            left: 'view.skin.frame.leftLineTile.width',
-            top: 'view.skin.frame.topLineTile.height + view.skin.chip.size * ( yLoopIndex + 1 )',
+            left: 0,
+            top: 'view.skin.chip.size * yLoopIndex',
         },
         topShadowLine: {
             url: 'top-shadow-line.svg',
+            width: 'view.skin.chip.size',
             height: 'view.skin.chip.size',
-            left: 'view.skin.frame.leftLineTile.width + view.skin.chip.size * ( xLoopIndex + 1 )',
-            top: 'view.skin.frame.topLineTile.height'
-        },
+            left: 'view.skin.chip.size * xLoopIndex',
+            top: 0
+        }
+    },
+    frame: {
+        width: 'view.skin.frame.topLineTile.width + view.skin.chip.size * game.numberOfColumns + view.skin.frame.rightLineTile.width',
+        height: 'view.skin.frame.topLineTile.height + view.skin.chip.size * game.numberOfRows + view.skin.frame.bottomLineTile.height',
+        left: '( view.clientWidth - view.skin.frame.width ) / 2',
+        top: '( view.clientHeight - view.skin.frame.height ) / 2',
         topLineTile: {
             url: 'frame-top.svg',
             width: 'view.skin.chip.size',

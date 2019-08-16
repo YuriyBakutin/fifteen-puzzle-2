@@ -4,22 +4,22 @@
    width="140"
    height="140"
    viewBox="0 0 140 140">
-  <defs>
-    <filter
-       id="filter949"
-       style="color-interpolation-filters:sRGB">
-      <feGaussianBlur
-         id="feGaussianBlur947"
-         result="blur"
-         stdDeviation="5 5.1" />
-    </filter>
-  </defs>
-  <rect
-     transform="matrix(1.0456928,0,0,1.0456928,1.6479079,2.5018291)"
-     ry="17.894737"
-     y="20"
-     x="20"
-     height="100"
-     width="100"
-     style="fill-opacity:0.88839287;filter:url(#filter949)" />
+   <defs>
+      <filter
+         id="filter949"
+         style="color-interpolation-filters:sRGB">
+         <feGaussianBlur
+            id="feGaussianBlur947"
+            result="blur"
+            stdDeviation="5 5.1" />
+      </filter>
+   </defs>
+   <rect
+      transform="matrix(1.0456928,0,0,1.0456928,1.6479079,2.5018291)"
+      ry="17.894737"
+      y="20"
+      x="20"
+      height="100"
+      width="100"
+      style="fill-opacity:0.88839287;filter:url(#filter949)" />
 </svg>

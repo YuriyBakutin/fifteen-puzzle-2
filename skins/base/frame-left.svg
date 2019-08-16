@@ -4,39 +4,39 @@
    viewBox="0 0 86 86"
    height="86"
    width="86">
-  <defs>
-    <linearGradient
-       id="linearGradient4163">
-      <stop
-         offset="0"
-         style="stop-color:#5e300e" />
-      <stop
-         style="stop-color:#7b390c"
-         offset="0.75955856" />
-      <stop
-         offset="1"
-         style="stop-color:#311503" />
-    </linearGradient>
-    <linearGradient
-       xlink:href="#linearGradient4163"
-       id="linearGradient4645"
-       x1="0"
-       y1="43"
-       x2="86"
-       y2="43"
-       gradientUnits="userSpaceOnUse"
-       gradientTransform="rotate(-180,43,43)" />
-  </defs>
-  <path
-     d="M 0,86 H 86 V 0 H 0 Z"
-     style="opacity:1;fill:url(#linearGradient4645)" />
-  <path
-     d="m 53,0 0,86"
-     style="fill:none;stroke:#1b0b00;stroke-width:3;stroke-miterlimit:4" />
-  <path
-     d="m 61.5,0 0,86"
-     style="fill:none;stroke:#1b0b00;stroke-width:5;stroke-miterlimit:4" />
-  <path
-     d="M 70,0 V 86"
-     style="fill:none;stroke:#1b0b00;stroke-width:1;stroke-miterlimit:4" />
+   <defs>
+      <linearGradient
+         id="linearGradient4163">
+         <stop
+            offset="0"
+            style="stop-color:#5e300e" />
+         <stop
+            style="stop-color:#7b390c"
+            offset="0.75955856" />
+         <stop
+            offset="1"
+            style="stop-color:#311503" />
+      </linearGradient>
+      <linearGradient
+         xlink:href="#linearGradient4163"
+         id="linearGradient4645"
+         x1="0"
+         y1="43"
+         x2="86"
+         y2="43"
+         gradientUnits="userSpaceOnUse"
+         gradientTransform="rotate(-180,43,43)" />
+   </defs>
+   <path
+      d="M 0,86 H 86 V 0 H 0 Z"
+      style="opacity:1;fill:url(#linearGradient4645)" />
+   <path
+      d="m 53,0 0,86"
+      style="fill:none;stroke:#1b0b00;stroke-width:3;stroke-miterlimit:4" />
+   <path
+      d="m 61.5,0 0,86"
+      style="fill:none;stroke:#1b0b00;stroke-width:5;stroke-miterlimit:4" />
+   <path
+      d="M 70,0 V 86"
+      style="fill:none;stroke:#1b0b00;stroke-width:1;stroke-miterlimit:4" />
 </svg>
