@@ -4,9 +4,11 @@ import { game } from './game.js'
 'use strict'
 
 onload = async () => {
+    window.view = view
+
     view.currentSkinIndex = localStorage.getItem('CurrentSkinIndex') || 0
     game.numberOfColumns = localStorage.getItem('numberOfColumns')
-        || game.DEFAULT_NUMBER_OF_ROWS
+        || game.DEFAULT_NUMBER_OF_COLUMNS
     game.numberOfRows = localStorage.getItem('numberOfRows')
         || game.DEFAULT_NUMBER_OF_ROWS
 

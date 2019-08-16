@@ -47,7 +47,7 @@
          xlink:href="#linearGradient4191" />
    </defs>
    <path
-      style="opacity:1;fill:url(#radialGradient4197)"
+      style="fill:url(#radialGradient4197)"
       d="m 86,0 v 86 h 86 A 86,86 0 0 0 86,0 Z" />
    <path
       style="fill:none;stroke:#1b0b00;stroke-width:3;stroke-miterlimit:4"
@@ -59,7 +59,7 @@
       style="fill:none;stroke:#1b0b00;stroke-width:1;stroke-miterlimit:4"
       d="M 102,86 C 102,77.16344 94.83656,70 86,70" />
    <path
-      style="opacity:1;fill:url(#linearGradient4645-6)"
+      style="fill:url(#linearGradient4645-6)"
       d="M 172,86 H 86 v 86 h 86 z" />
    <path
       style="fill:none;stroke:#1b0b00;stroke-width:3;stroke-miterlimit:4"
@@ -84,4 +84,7 @@
          style="fill:none;stroke:#1b0b00;stroke-width:1;stroke-miterlimit:4"
          d="M 0,16 H 86" />
    </g>
+   <path
+      d="M 86,86 V 99.688165 A 13.688729,13.688729 0 0 0 72.311835,86 Z"
+      style="fill:#5e300e;" />
 </svg>

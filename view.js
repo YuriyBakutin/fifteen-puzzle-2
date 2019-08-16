@@ -4,10 +4,10 @@ import { GameBoard } from './GameBoard.js'
 'use strict'
 
 export const view = {
-    BACKSIDE_Z_INDEX: 0,
-    SHADOW_Z_INDEX: 1,
-    GAME_Z_INDEX: 2,
-    CONTROL_Z_INDEX: 3,
+    BACKSIDE_Z_INDEX: 1,
+    SHADOW_Z_INDEX: 2,
+    GAME_Z_INDEX: 3,
+    CONTROL_Z_INDEX: 4,
     clientWidth: null,
     clientHeight: null,
     orientation: null,
@@ -16,6 +16,7 @@ export const view = {
     skinUrl: null,
     skin: null,
     scale: null,
+    oldSkale: null,
     twitchWhenResizeEliminationTimerId: null,
     twitchWhenResizeEliminationTiming: 400, // ms
     gameBoard: null,
@@ -67,9 +68,7 @@ export const view = {
         let xScale = (view.clientWidth - game.numberOfColumns - 1) / view.resolve(skin.frame.width)
         let yScale = (view.clientHeight - game.numberOfRows - 1) / view.resolve(skin.frame.height)
         view.scale = xScale < yScale ? xScale : yScale
-
         view.rescaleSkin()
-
         view.gameBoard = new GameBoard()
     },
 

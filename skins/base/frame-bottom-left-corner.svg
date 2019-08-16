@@ -18,7 +18,7 @@
             style="stop-color:#311503" />
       </linearGradient>
       <radialGradient
-         gradientTransform="rotate(180,260,86)"
+         gradientTransform="rotate(-180,260,86)"
          gradientUnits="userSpaceOnUse"
          r="86"
          fy="86"
@@ -37,7 +37,7 @@
          id="linearGradient4645"
          xlink:href="#linearGradient4191" />
       <linearGradient
-         gradientTransform="rotate(180,43,43)"
+         gradientTransform="rotate(-180,43,43)"
          gradientUnits="userSpaceOnUse"
          y2="43"
          x2="86"
@@ -70,15 +70,13 @@
    <path
       style="fill:none;stroke:#1b0b00;stroke-width:1;stroke-miterlimit:4"
       d="M 70,0 V 86" />
-   <g
-      transform="translate(86,86)">
+   <g transform="translate(86,86)">
       <path
          style="fill:url(#linearGradient4645)"
          d="M 86,86 V 0 H 0 v 86 z" />
       <path
          style="fill:none;stroke:#1b0b00;stroke-width:3;stroke-miterlimit:4"
-         d="M 0,33 H 86"
-         id="circle4185-0" />
+         d="M 0,33 H 86" />
       <path
          style="fill:none;stroke:#1b0b00;stroke-width:5;stroke-miterlimit:4"
          d="M 0,24.5 H 86" />
@@ -86,4 +84,7 @@
          style="fill:none;stroke:#1b0b00;stroke-width:1;stroke-miterlimit:4"
          d="M 0,16 H 86" />
    </g>
+   <path
+      d="M 86,86 V 72.311835 A 13.688729,13.688729 0 0 0 99.688165,86 Z"
+      style="fill:#5e300e" />
 </svg>

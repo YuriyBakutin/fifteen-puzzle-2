@@ -6,23 +6,26 @@
    width="86">
    <defs>
       <filter
-         id="filter815"
+         id="filter1016"
          style="color-interpolation-filters:sRGB">
-         <feGaussianBlur stdDeviation="4.0" />
+         <feGaussianBlur
+            result="blur"
+            stdDeviation="12 12" />
       </filter>
       <clipPath
-         id="clipPath862"
+         id="clipPath1623"
          clipPathUnits="userSpaceOnUse">
          <rect
-            y="11.480775"
-            x="2.0953021"
-            height="72.48571"
-            width="72.48571" />
+            y="86"
+            x="86"
+            height="86"
+            width="86" />
       </clipPath>
    </defs>
-   <path
-      clip-path="url(#clipPath862)"
-      transform="matrix(1.1864407,0,0,1.1864407,-2.4859516,-13.621258)"
-      style="stroke-width:0.84285712;filter:url(#filter815)"
-      d="m -2.5508475,-3.279661 0,103.2 h 8.017578 l 0,-95.182422 H 83.449153 v -8.017578 z" />
+   <g transform="translate(-86,-86)">
+      <path
+         clip-path="url(#clipPath1623)"
+         style="filter:url(#filter1016)"
+         d="M 81,48.567795 V 196.05078 H 91 V 67.255295 c 4.36e-4,-4.857233 3.830267,-8.687064 8.6875,-8.6875 h 97.0918 v -10 z" />
+   </g>
 </svg>
