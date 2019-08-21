@@ -1,0 +1,90 @@
+<svg
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   width="172"
+   height="172"
+   viewBox="0 0 172 172">
+   <defs>
+      <linearGradient
+         id="linearGradient4191">
+         <stop
+            offset="0"
+            style="stop-color:#5e300e" />
+         <stop
+            style="stop-color:#7b390f"
+            offset="0.75955856" />
+         <stop
+            offset="1"
+            style="stop-color:#311503" />
+      </linearGradient>
+      <radialGradient
+         gradientTransform="translate(-348)"
+         gradientUnits="userSpaceOnUse"
+         r="86"
+         fy="86"
+         fx="434"
+         cy="86"
+         cx="434"
+         id="radialGradient4197"
+         xlink:href="#linearGradient4191" />
+      <linearGradient
+         gradientTransform="rotate(90,43,43)"
+         gradientUnits="userSpaceOnUse"
+         y2="43"
+         x2="86"
+         y1="43"
+         x1="0"
+         id="linearGradient4645"
+         xlink:href="#linearGradient4191" />
+      <linearGradient
+         gradientTransform="translate(86,86)"
+         gradientUnits="userSpaceOnUse"
+         y2="43"
+         x2="86"
+         y1="43"
+         x1="0"
+         id="linearGradient4645-6"
+         xlink:href="#linearGradient4191" />
+   </defs>
+   <path
+      style="fill:url(#radialGradient4197)"
+      d="m 86,0 v 86 h 86 A 86,86 0 0 0 86,0 Z" />
+   <path
+      style="fill:none;stroke:#1b0b00;stroke-width:3;stroke-miterlimit:4"
+      d="M 119,86 C 119,67.7746 104.2254,53 86,53" />
+   <path
+      style="fill:none;stroke:#1b0b00;stroke-width:5;stroke-miterlimit:4"
+      d="M 110.5,86 C 110.5,72.46902 99.53098,61.5 86,61.5" />
+   <path
+      style="fill:none;stroke:#1b0b00;stroke-width:1;stroke-miterlimit:4"
+      d="M 102,86 C 102,77.16344 94.83656,70 86,70" />
+   <path
+      style="fill:url(#linearGradient4645-6)"
+      d="M 172,86 H 86 v 86 h 86 z" />
+   <path
+      style="fill:none;stroke:#1b0b00;stroke-width:3;stroke-miterlimit:4"
+      d="M 119,172 V 86" />
+   <path
+      style="fill:none;stroke:#1b0b00;stroke-width:5;stroke-miterlimit:4"
+      d="M 110.5,172 V 86" />
+   <path
+      style="fill:none;stroke:#1b0b00;stroke-width:1;stroke-miterlimit:4"
+      d="M 102,172 V 86" />
+   <g transform="rotate(-180,43,43)">
+      <path
+         style="fill:url(#linearGradient4645)"
+         d="M 86,86 V 0 H 0 v 86 z" />
+      <path
+         style="fill:none;stroke:#1b0b00;stroke-width:3;stroke-miterlimit:4"
+         d="M 0,33 H 86" />
+      <path
+         style="fill:none;stroke:#1b0b00;stroke-width:5;stroke-miterlimit:4"
+         d="M 0,24.5 H 86" />
+      <path
+         style="fill:none;stroke:#1b0b00;stroke-width:1;stroke-miterlimit:4"
+         d="M 0,16 H 86" />
+   </g>
+   <path
+      d="M 86,86 V 99.688165 A 13.688729,13.688729 0 0 0 72.311835,86 Z"
+      style="fill:#5e300e;" />
+</svg>

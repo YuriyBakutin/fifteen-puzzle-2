@@ -16,7 +16,6 @@ export const view = {
     skinUrl: null,
     skin: null,
     scale: null,
-    oldSkale: null,
     twitchWhenResizeEliminationTimerId: null,
     twitchWhenResizeEliminationTiming: 400, // ms
     gameBoard: null,
@@ -69,6 +68,9 @@ export const view = {
         let yScale = (view.clientHeight - game.numberOfRows - 1) / view.resolve(skin.frame.height)
         view.scale = xScale < yScale ? xScale : yScale
         view.rescaleSkin()
+        if (view.gameBoardElement) {
+            view.gameBoardElement.remove()
+        }
         view.gameBoard = new GameBoard()
     },
 
@@ -83,7 +85,8 @@ export const view = {
             loopIndexes,
             cssPropPosition,
             top,
-            left
+            left,
+            disabled
         } = paramObject
 
         // default values:
@@ -93,9 +96,12 @@ export const view = {
 
         const elem = document.createElement(tagName)
 
+        let src = view.skinUrl + (
+            disabled ? skinElement.disabledUrl : skinElement.url
+        )
         if ( tagName == 'img' ) {
             elem.setAttribute('src',
-                view.skinUrl + skinElement.url
+                src
             )
         }
 
