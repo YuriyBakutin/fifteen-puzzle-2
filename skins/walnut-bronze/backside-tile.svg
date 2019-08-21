@@ -1,0 +1,50 @@
+<svg
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   viewBox="0 0 950 950"
+   width="950"
+   height="950">
+   <defs
+      id="defs5467">
+      <filter
+         width="11.44"
+         height="12.88"
+         x="-0.72"
+         y="-1.44"
+         id="filter5187"
+         style="color-interpolation-filters:sRGB">
+         <feGaussianBlur
+            stdDeviation="19.170039" />
+      </filter>
+      <filter
+         height="19.123008"
+         y="-4.5615041"
+         width="19.123008"
+         x="-4.5615041"
+         id="filter5123"
+         style="color-interpolation-filters:sRGB">
+         <feGaussianBlur
+            stdDeviation="19.006268" />
+      </filter>
+   </defs>
+   <rect
+      y="0"
+      x="0"
+      height="950"
+      width="950"
+      style="fill:#4a270e;" />
+   <path
+      style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:61;stroke-miterlimit:4;stroke-opacity:1;filter:url(#filter5187);opacity:0.2"
+      d="m 794.5006,424.331 c 0,176.4552 -143.0452,319.5012 -319.5006,319.5012 -176.4554,0 -319.5007,-143.046 -319.5007,-319.5012"
+      id="path5379" />
+   <circle
+      style="filter:url(#filter5123);opacity:0.2"
+      cx="321.58318"
+      cy="256.16789"
+      r="50" />
+   <circle
+      r="50"
+      cy="256.16789"
+      cx="628.41698"
+      style="filter:url(#filter5123);opacity:0.2" />
+</svg>

@@ -6,19 +6,22 @@ import { game } from './game.js'
 export class GameBoard {
 
     constructor() {
+        let disabled
+
+        document.body.setAttribute('style', `
+            background: ${view.skin.backgroundColor}
+            `)
 
         view.gameBoardElement = view.renderElement({
             skinElement: view.skin.frame,
             tagName: 'div',
             parentElement: document.body,
             id: 'gameBoard'
-            // cssPropPosition: 'relative'
         })
 
-        view.gameField = view.renderElement({
+        view.gameFieldElement = view.renderElement({
             skinElement: view.skin.gameField,
             tagName: 'div',
-            // parentElement: document.body,
         })
 
         for (
@@ -33,7 +36,7 @@ export class GameBoard {
             ) {
                 view.renderElement({
                     skinElement: view.skin.backsideBackgroundTile,
-                    parentElement: view.gameField,
+                    parentElement: view.gameFieldElement,
                     loopIndexes: { xLoopIndex, yLoopIndex },
                     zIndex: view.BACKSIDE_Z_INDEX
                 })
@@ -42,7 +45,7 @@ export class GameBoard {
 
         view.renderElement({
             skinElement: view.skin.gameField.topLeftShadowCorner,
-            parentElement: view.gameField,
+            parentElement: view.gameFieldElement,
             zIndex: view.SHADOW_Z_INDEX
         })
 
@@ -54,7 +57,7 @@ export class GameBoard {
             view.renderElement({
                 skinElement: view.skin.gameField.topShadowLine,
                 loopIndexes: { xLoopIndex },
-                parentElement: view.gameField,
+                parentElement: view.gameFieldElement,
                 zIndex: view.SHADOW_Z_INDEX
             })
         }
@@ -67,7 +70,7 @@ export class GameBoard {
             view.renderElement({
                 skinElement: view.skin.gameField.leftShadowLine,
                 loopIndexes: { yLoopIndex },
-                parentElement: view.gameField,
+                parentElement: view.gameFieldElement,
                 zIndex: view.SHADOW_Z_INDEX
             })
         }
@@ -109,8 +112,6 @@ export class GameBoard {
             yLoopIndex < game.numberOfRows - 2;
             yLoopIndex++
         ) {
-            let loopIndexes = { yLoopIndex }
-
             view.renderElement({
                 skinElement: view.skin.frame.leftLineTile,
                 loopIndexes: { yLoopIndex }
@@ -120,6 +121,82 @@ export class GameBoard {
                 skinElement: view.skin.frame.rightLineTile,
                 loopIndexes: { yLoopIndex }
             })
+
         }
+
+        view.startAndPauseElement = view.renderElement({
+            skinElement: view.skin.frame.buttons.startAndPause,
+            id: 'startAndPause'
+        })
+
+        view.renderElement({
+            skinElement: view.skin.frame.buttons.restart,
+            id: 'restart'
+        })
+
+        disabled = game.numberOfRows == game.MIN_NUMBER_OF_ROWS
+        view.removeRowElement = view.renderElement({
+            skinElement: view.skin.frame.buttons.removeRow,
+            disabled,
+            id: 'removeRow'
+        })
+        view.removeRowElement.disabled = disabled
+
+        view.renderElement({
+            skinElement: view.skin.frame.buttons.addRemoveRowImage
+        })
+
+        disabled = game.numberOfRows == game.MAX_NUMBER_OF_ROWS
+        view.addRowElement = view.renderElement({
+            skinElement: view.skin.frame.buttons.addRow,
+            disabled,
+            id: 'addRow'
+        })
+        view.addRowElement.disabled = disabled
+
+        disabled = game.numberOfColumns == game.MIN_NUMBER_OF_COLUMNS
+        view.removeColumnElement = view.renderElement({
+            skinElement: view.skin.frame.buttons.removeColumn,
+            disabled,
+            id: 'removeColumn'
+        })
+        view.removeColumnElement.disabled = disabled
+
+        disabled = game.numberOfColumns == game.MAX_NUMBER_OF_COLUMNS
+        view.addColumnElement = view.renderElement({
+            skinElement: view.skin.frame.buttons.addColumn,
+            disabled,
+            id: 'addColumn'
+        })
+        view.addColumnElement.disabled = disabled
+
+        view.renderElement({
+            skinElement: view.skin.frame.buttons.removeColumnImage
+        })
+
+        view.renderElement({
+            skinElement: view.skin.frame.buttons.addColumnImage
+        })
+
+        view.addColumnElement.disabled = disabled
+        view.previousSkinElement = view.renderElement({
+            skinElement: view.skin.frame.buttons.previousSkin,
+            disabled: true,
+            id: 'previousSkin'
+        })
+
+        view.renderElement({
+            skinElement: view.skin.frame.buttons.nextSkin,
+            disabled: true,
+            id: 'nextSkin'
+        })
+
+        view.renderElement({
+            skinElement: view.skin.frame.buttons.previousSkinImage
+        })
+
+        view.nextSkinElement = view.renderElement({
+            skinElement: view.skin.frame.buttons.nextSkinImage
+        })
     }
 }

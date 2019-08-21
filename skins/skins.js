@@ -1,8 +1,15 @@
 export const skins = [
     {
-        "name": "base",
+        "name": "carbon",
         "orientation": [
-            { "url": "base" },
+            { "url": "carbon" },
+            { "url": null },
+        ]
+    },
+    {
+        "name": "walnut-bronze",
+        "orientation": [
+            { "url": "walnut-bronze" },
             { "url": null },
         ]
     }

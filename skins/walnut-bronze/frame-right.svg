@@ -1,0 +1,42 @@
+<svg
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   width="86"
+   height="86"
+   viewBox="0 0 86 86">
+   <defs>
+      <linearGradient
+         id="linearGradient4163">
+         <stop
+            style="stop-color:#5e300e"
+            offset="0" />
+         <stop
+            offset="0.75955856"
+            style="stop-color:#7b390c" />
+         <stop
+            style="stop-color:#311503"
+            offset="1" />
+      </linearGradient>
+      <linearGradient
+         gradientTransform="matrix(1,0,0,-1,0,86)"
+         gradientUnits="userSpaceOnUse"
+         y2="43"
+         x2="86"
+         y1="43"
+         x1="0"
+         id="linearGradient4645"
+         xlink:href="#linearGradient4163" />
+   </defs>
+   <path
+      style="opacity:1;fill:url(#linearGradient4645)"
+      d="M 86,86 H 0 L 0,0 h 86 z" />
+   <path
+      style="fill:none;stroke:#1b0b00;stroke-width:3;stroke-miterlimit:4"
+      d="m 33,0 0,86" />
+   <path
+      style="fill:none;stroke:#1b0b00;stroke-width:5;stroke-miterlimit:4"
+      d="m 24.5,0 0,86" />
+   <path
+      style="fill:none;stroke:#1b0b00;stroke-width:1;stroke-miterlimit:4"
+      d="m 16,0 0,86" />
+</svg>
