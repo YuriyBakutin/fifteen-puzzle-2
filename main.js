@@ -6,12 +6,6 @@ import { game } from './game.js'
 onload = async () => {
     window.view = view
 
-    view.currentSkinIndex = localStorage.getItem('CurrentSkinIndex') || 0
-    game.numberOfColumns = localStorage.getItem('numberOfColumns')
-        || game.DEFAULT_NUMBER_OF_COLUMNS
-    game.numberOfRows = localStorage.getItem('numberOfRows')
-        || game.DEFAULT_NUMBER_OF_ROWS
-
     let { skins } = await import('./skins/skins.js')
     view.skinsRef = skins
 
@@ -62,6 +56,20 @@ const handlers = {
             return
         }
         game.numberOfColumns--
+        view.repaint()
+    },
+    onClickNextSkin: () => {
+        view.currentSkinIndex++
+        if ( view.currentSkinIndex == view.skinsRef.length ) {
+            view.currentSkinIndex = 0
+        }
+        view.repaint()
+    },
+    onClickPreviousSkin: () => {
+        view.currentSkinIndex--
+        if ( view.currentSkinIndex < 0 ) {
+            view.currentSkinIndex = view.skinsRef.length - 1
+        }
         view.repaint()
     }
 }

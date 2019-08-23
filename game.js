@@ -7,6 +7,20 @@ export const game = {
     MIN_NUMBER_OF_ROWS: 2,
     DEFAULT_NUMBER_OF_COLUMNS: 4,
     DEFAULT_NUMBER_OF_ROWS: 4,
-    numberOfColumns: null,
-    numberOfRows: null,
+
+    get numberOfColumns () {
+        return localStorage['numberOfColumns'] || game.DEFAULT_NUMBER_OF_COLUMNS
+    },
+
+    set numberOfColumns (i) {
+        localStorage['numberOfColumns'] = i
+    },
+
+    get numberOfRows () {
+        return localStorage['numberOfRows'] || game.DEFAULT_NUMBER_OF_ROWS
+    },
+
+    set numberOfRows (i) {
+        localStorage['numberOfRows'] = i
+    },
 }

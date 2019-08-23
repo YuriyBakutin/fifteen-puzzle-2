@@ -121,7 +121,6 @@ export class GameBoard {
                 skinElement: view.skin.frame.rightLineTile,
                 loopIndexes: { yLoopIndex }
             })
-
         }
 
         view.startAndPauseElement = view.renderElement({
@@ -181,13 +180,11 @@ export class GameBoard {
         view.addColumnElement.disabled = disabled
         view.previousSkinElement = view.renderElement({
             skinElement: view.skin.frame.buttons.previousSkin,
-            disabled: true,
             id: 'previousSkin'
         })
 
         view.renderElement({
             skinElement: view.skin.frame.buttons.nextSkin,
-            disabled: true,
             id: 'nextSkin'
         })
 

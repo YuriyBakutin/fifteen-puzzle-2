@@ -108,6 +108,14 @@ export const skin = {
                 right: 'view.skin.frame.buttons.startAndPause.left',
                 bottom: 'view.skin.frame.buttons.startAndPause.bottom'
             },
+            addRemoveRowImage: {
+                url: 'rows-symbol.svg',
+                disabledUrl: 'minus-symbol-disabled.svg',
+                width: 'view.skin.frame.buttons.width',
+                height: 'view.skin.frame.buttons.height',
+                left: 'view.skin.gameField.left + ( view.skin.gameField.width - view.skin.frame.buttons.width ) / 2',
+                bottom: 'view.skin.frame.buttons.startAndPause.bottom'
+            },
             removeRow: {
                 url: 'minus-symbol.svg',
                 disabledUrl: 'minus-symbol-disabled.svg',
@@ -124,13 +132,27 @@ export const skin = {
                 right: 'view.skin.frame.buttons.removeRow.left',
                 bottom: 'view.skin.frame.buttons.startAndPause.bottom'
             },
+            removeColumnImage: {
+                url: 'columns-symbol.svg',
+                width: 'view.skin.frame.buttons.width',
+                height: 'view.skin.frame.buttons.height',
+                left: 30,
+                bottom: 'view.skin.frame.height / 3'
+            },
+            addColumnImage: {
+                url: 'columns-symbol.svg',
+                width: 'view.skin.frame.buttons.width',
+                height: 'view.skin.frame.buttons.height',
+                right: 'view.skin.frame.buttons.removeColumnImage.left',
+                bottom: 'view.skin.frame.buttons.removeColumnImage.bottom'
+            },
             removeColumn: {
                 url: 'minus-symbol.svg',
                 disabledUrl: 'minus-symbol-disabled.svg',
                 width: 'view.skin.frame.buttons.width',
                 height: 'view.skin.frame.buttons.height',
-                left: 30,
-                bottom: 'view.skin.frame.height / 3'
+                left: 'view.skin.frame.buttons.removeColumnImage.left',
+                bottom: '( view.skin.frame.height / 3 ) - view.skin.frame.buttons.height * 2'
             },
             addColumn: {
                 url: 'plus-symbol.svg',
@@ -145,7 +167,7 @@ export const skin = {
                 width: 'view.skin.frame.buttons.width',
                 height: 'view.skin.frame.buttons.height',
                 left: 'view.skin.frame.buttons.removeColumn.left',
-                top: 'view.skin.frame.height / 3 - 30'
+                top: 'view.skin.frame.height / 3 - view.skin.frame.buttons.height * 2'
             },
             nextSkinImage: {
                 url: 'skin-symbol.svg',
