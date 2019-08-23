@@ -4,6 +4,7 @@ import { GameBoard } from './GameBoard.js'
 'use strict'
 
 export const view = {
+    DEFAULT_SKI_INDEX: 1,
     BACKSIDE_Z_INDEX: 1,
     SHADOW_Z_INDEX: 2,
     GAME_Z_INDEX: 3,
@@ -22,7 +23,7 @@ export const view = {
     gameBoardElement: null,
 
     get currentSkinIndex () {
-        return localStorage['CurrentSkinIndex'] || 0
+        return localStorage['CurrentSkinIndex'] || view.DEFAULT_SKI_INDEX
     },
 
     set currentSkinIndex (i) {
