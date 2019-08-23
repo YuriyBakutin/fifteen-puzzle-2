@@ -71,6 +71,9 @@ const handlers = {
             view.currentSkinIndex = view.skinsRef.length - 1
         }
         view.repaint()
+    },
+    onClickRestart: () => {
+        game.randomReplace()
     }
 }
 
