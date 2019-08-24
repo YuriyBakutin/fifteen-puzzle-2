@@ -11,6 +11,8 @@ export const view = {
     CONTROL_Z_INDEX: 4,
     clientWidth: null,
     clientHeight: null,
+    PORTRAIT: 0,
+    LANDSCAPE: 1,
     orientation: null,
     skinsRef: null,
     currentSkinIndex: null,
@@ -45,12 +47,11 @@ export const view = {
     },
 
     async repaint() {
-        const PORTRAIT = 0
-        const LANDSCAPE = 1
-
         view.clientWidth = document.documentElement.clientWidth
         view.clientHeight = document.documentElement.clientHeight
-        view.orientation = view.clientWidth > view.clientHeight ? LANDSCAPE : PORTRAIT
+        view.orientation = view.clientWidth > view.clientHeight
+            ? view.LANDSCAPE
+            : view.PORTRAIT
 
         if ( !view.skinsRef[ view.currentSkinIndex ].orientation[ view.orientation ].url ) {
             // Toggle orientation:
