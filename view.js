@@ -8,9 +8,10 @@ export const view = {
     DEFAULT_SKIN_INDEX: 0,
     BACKSIDE_Z_INDEX: 1,
     SHADOW_Z_INDEX: 2,
-    GAME_Z_INDEX: 3,
-    CONTROL_Z_INDEX: 4,
-    TEXT_Z_INDEX: 5,
+    GAMEBOARD_Z_INDEX: 3,
+    CHIP_POOL_Z_INDEX: 4,
+    CONTROL_Z_INDEX: 5,
+    TEXT_Z_INDEX: 6,
     clientWidth: null,
     clientHeight: null,
     PORTRAIT: 0,
@@ -87,6 +88,7 @@ export const view = {
         view.gameBoard = new GameBoard()
 
         view.renderChipPool()
+
     },
 
     renderChipPool() {
@@ -125,7 +127,7 @@ export const view = {
 
         // default values:
         cssPropPosition = cssPropPosition || 'absolute'
-        zIndex = zIndex || (view.TEXT_Z_INDEX ? 10 : view.GAME_Z_INDEX)
+        zIndex = zIndex || view.GAMEBOARD_Z_INDEX
 
         tagName = skinElement.svg ? 'div' : (tagName || 'img')
 
@@ -170,6 +172,7 @@ export const view = {
                         svgResolvedString = elem.style.height
                         break
                     case 'text':
+                        zIndex = view.TEXT_Z_INDEX
                         svgResolvedString = text
                         break
                     case 'skinUrl':
@@ -181,6 +184,8 @@ export const view = {
                     return svgResolvedString
                 }
             )
+
+            elem.style.zIndex = zIndex
 
             elem.innerHTML = svgResolvedStringArray.join('')
         }

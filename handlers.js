@@ -16,24 +16,40 @@ const restart = async () => {
     await view.repaint()
 }
 
+const getChipId = (element) => {
+    if ( element == document.body ) {
+        return null
+    }
+
+    if ( element.id ) {
+        return element.id
+    }
+
+    return getChipId(element.parentNode)
+}
+
+onmouseup = (event) => {
+    const chipId = getChipId(event.target)
+    if ( !chipId ) {
+        return
+    }
+    const mouseUpEventName = 'onMouseUp' + toPascal(chipId)
+
+    if ( mouseUpEventName.slice(0,'onMouseUpChip'.length) == 'onMouseUpChip' ) {
+        mouseEventHandlers.onMouseUpChip(mouseUpEventName.slice('onMouseUpChip'.length))
+        return
+    }
+}
+
 onclick = (event) => {
     const clickEventName = 'onClick' + toPascal(event.target.id)
 
-    clickHandling(clickEventName)
-}
-
-const clickHandling = (clickEventName) => {
-    if ( clickEventName.slice(0,'onClickChip'.length) == 'onClickChip' ) {
-        clickHandlers.onClickChip(clickEventName.slice('onClickChip'.length))
-        return
-    }
-
-    if ( clickHandlers[clickEventName] ) {
-        clickHandlers[clickEventName]()
+    if ( mouseEventHandlers[clickEventName] ) {
+        mouseEventHandlers[clickEventName]()
     }
 }
 
-const clickHandlers = {
+const mouseEventHandlers = {
     onClickAddRow() {
         if ( view.addRowElement.disabled ) {
             return
@@ -81,8 +97,8 @@ const clickHandlers = {
     onClickRestart() {
         restart()
     },
-    onClickChip() {
-
+    onMouseUpChip(chipIndex) {
+        console.log('chipIndex: ', chipIndex)
     }
 }
 

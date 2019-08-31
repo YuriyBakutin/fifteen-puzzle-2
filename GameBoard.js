@@ -15,11 +15,10 @@ export class GameBoard {
         view.gameBoardElement = view.renderElement({
             skinElement: view.skin.frame,
             tagName: 'div',
-            parentElement: document.body,
-            id: 'gameBoard'
+            parentElement: document.body
         })
 
-        view.gameFieldElement = view.renderElement({
+        view.backsideElement = view.renderElement({
             skinElement: view.skin.gameField,
             tagName: 'div',
         })
@@ -36,7 +35,7 @@ export class GameBoard {
             ) {
                 view.renderElement({
                     skinElement: view.skin.backsideBackgroundTile,
-                    parentElement: view.gameFieldElement,
+                    parentElement: view.backsideElement,
                     placeIndexes: { xPlaceIndex, yPlaceIndex },
                     zIndex: view.BACKSIDE_Z_INDEX
                 })
@@ -45,7 +44,7 @@ export class GameBoard {
 
         view.renderElement({
             skinElement: view.skin.gameField.topLeftShadowCorner,
-            parentElement: view.gameFieldElement,
+            parentElement: view.backsideElement,
             zIndex: view.SHADOW_Z_INDEX
         })
 
@@ -57,7 +56,7 @@ export class GameBoard {
             view.renderElement({
                 skinElement: view.skin.gameField.topShadowLine,
                 placeIndexes: { xPlaceIndex },
-                parentElement: view.gameFieldElement,
+                parentElement: view.backsideElement,
                 zIndex: view.SHADOW_Z_INDEX
             })
         }
@@ -70,7 +69,7 @@ export class GameBoard {
             view.renderElement({
                 skinElement: view.skin.gameField.leftShadowLine,
                 placeIndexes: { yPlaceIndex },
-                parentElement: view.gameFieldElement,
+                parentElement: view.backsideElement,
                 zIndex: view.SHADOW_Z_INDEX
             })
         }
@@ -194,6 +193,11 @@ export class GameBoard {
 
         view.nextSkinElement = view.renderElement({
             skinElement: view.skin.frame.buttons.nextSkinImage
+        })
+
+        view.gameFieldElement = view.renderElement({
+            skinElement: view.skin.gameField,
+            tagName: 'div',
         })
     }
 }

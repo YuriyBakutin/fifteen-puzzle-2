@@ -14,6 +14,14 @@ export class Chip {
 
         let chipElementsObj = {}
 
+        chipElementsObj.shadow = view.renderElement({
+            skinElement: view.skin.chip.shadow,
+            placeIndexes: { xPlaceIndex, yPlaceIndex },
+            parentElement: view.gameFieldElement,
+            id: 'chipShadow' + chipIndex,
+            zIndex: view.SHADOW_Z_INDEX
+        })
+
         chipElementsObj.frame = view.renderElement({
             skinElement: view.skin.chip.chipFrame,
             placeIndexes: { xPlaceIndex, yPlaceIndex },
@@ -22,15 +30,10 @@ export class Chip {
             id: 'chip' + chipIndex
         })
 
-        chipElementsObj.shadow = view.renderElement({
-            skinElement: view.skin.chip.shadow,
-            parentElement: chipElementsObj.frame,
-            zIndex: view.SHADOW_Z_INDEX
-        })
-
         chipElementsObj.chip = view.renderElement({
             skinElement: view.skin.chip.chip,
             parentElement: chipElementsObj.frame,
+            zIndex: view.CHIP_POOL_Z_INDEX
         })
 
         chipElementsObj.label = view.renderElement({
