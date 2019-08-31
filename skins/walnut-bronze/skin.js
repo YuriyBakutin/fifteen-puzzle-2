@@ -241,8 +241,8 @@ export const skin = {
             url: 'chip-shadow.svg',
             width: 140,
             height: 140,
-            left: '( view.skin.frame.chip.size - view.skin.frame.chip.shadow.width ) / 2',
-            top: '( view.skin.frame.chip.size - view.skin.frame.chip.shadow.width ) / 2'
+            left: '( view.skin.chip.size - view.skin.chip.shadow.width ) / 2',
+            top: '( view.skin.chip.size - view.skin.chip.shadow.width ) / 2'
         }
     },
     indicators: {

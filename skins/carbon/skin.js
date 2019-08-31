@@ -235,15 +235,15 @@ export const skin = {
                 <text
                     style="font-family:Aspergit;text-align:center;font-size:70px;text-anchor:middle;fill:#ff6600"
                     x="47.5"
-                    y="73.3">??text??</text>
+                    y="73">??text??</text>
             </svg>` + "\n"
         },
         shadow: {
             url: 'chip-shadow.svg',
             width: 140,
             height: 140,
-            left: '( view.skin.frame.chip.size - view.skin.frame.chip.shadow.width ) / 2',
-            top: '( view.skin.frame.chip.size - view.skin.frame.chip.shadow.width ) / 2'
+            left: '( view.skin.chip.size - view.skin.chip.shadow.width ) / 2',
+            top: '( view.skin.chip.size - view.skin.chip.shadow.width ) / 2'
         }
     },
     indicators: {
