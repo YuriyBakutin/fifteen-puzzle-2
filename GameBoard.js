@@ -25,19 +25,19 @@ export class GameBoard {
         })
 
         for (
-            let yLoopIndex = 0;
-            yLoopIndex < game.numberOfRows;
-            yLoopIndex++
+            let yPlaceIndex = 0;
+            yPlaceIndex < game.numberOfRows;
+            yPlaceIndex++
         ) {
            for (
-                let xLoopIndex = 0;
-                xLoopIndex < game.numberOfColumns;
-                xLoopIndex++
+                let xPlaceIndex = 0;
+                xPlaceIndex < game.numberOfColumns;
+                xPlaceIndex++
             ) {
                 view.renderElement({
                     skinElement: view.skin.backsideBackgroundTile,
                     parentElement: view.gameFieldElement,
-                    loopIndexes: { xLoopIndex, yLoopIndex },
+                    placeIndexes: { xPlaceIndex, yPlaceIndex },
                     zIndex: view.BACKSIDE_Z_INDEX
                 })
             }
@@ -50,26 +50,26 @@ export class GameBoard {
         })
 
         for (
-            let xLoopIndex = 1;
-            xLoopIndex < game.numberOfColumns;
-            xLoopIndex++
+            let xPlaceIndex = 1;
+            xPlaceIndex < game.numberOfColumns;
+            xPlaceIndex++
         ) {
             view.renderElement({
                 skinElement: view.skin.gameField.topShadowLine,
-                loopIndexes: { xLoopIndex },
+                placeIndexes: { xPlaceIndex },
                 parentElement: view.gameFieldElement,
                 zIndex: view.SHADOW_Z_INDEX
             })
         }
 
         for (
-            let yLoopIndex = 1;
-            yLoopIndex < game.numberOfRows;
-            yLoopIndex++
+            let yPlaceIndex = 1;
+            yPlaceIndex < game.numberOfRows;
+            yPlaceIndex++
         ) {
             view.renderElement({
                 skinElement: view.skin.gameField.leftShadowLine,
-                loopIndexes: { yLoopIndex },
+                placeIndexes: { yPlaceIndex },
                 parentElement: view.gameFieldElement,
                 zIndex: view.SHADOW_Z_INDEX
             })
@@ -92,34 +92,34 @@ export class GameBoard {
         })
 
         for (
-            let xLoopIndex = 0;
-            xLoopIndex < game.numberOfColumns - 2;
-            xLoopIndex++
+            let xPlaceIndex = 0;
+            xPlaceIndex < game.numberOfColumns - 2;
+            xPlaceIndex++
         ) {
             view.renderElement({
                 skinElement: view.skin.frame.topLineTile,
-                loopIndexes: { xLoopIndex }
+                placeIndexes: { xPlaceIndex }
             })
 
             view.renderElement({
                 skinElement: view.skin.frame.bottomLineTile,
-                loopIndexes: { xLoopIndex }
+                placeIndexes: { xPlaceIndex }
             })
         }
 
         for (
-            let yLoopIndex = 0;
-            yLoopIndex < game.numberOfRows - 2;
-            yLoopIndex++
+            let yPlaceIndex = 0;
+            yPlaceIndex < game.numberOfRows - 2;
+            yPlaceIndex++
         ) {
             view.renderElement({
                 skinElement: view.skin.frame.leftLineTile,
-                loopIndexes: { yLoopIndex }
+                placeIndexes: { yPlaceIndex }
             })
 
             view.renderElement({
                 skinElement: view.skin.frame.rightLineTile,
-                loopIndexes: { yLoopIndex }
+                placeIndexes: { yPlaceIndex }
             })
         }
 

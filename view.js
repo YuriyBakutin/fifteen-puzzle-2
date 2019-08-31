@@ -1,14 +1,16 @@
 import { game } from './game.js' // here, game is applied by eval('…game.prop…')
 import { GameBoard } from './GameBoard.js'
+import { Chip } from './Chip.js'
 
 'use strict'
 
 export const view = {
-    DEFAULT_SKI_INDEX: 1,
+    DEFAULT_SKIN_INDEX: 0,
     BACKSIDE_Z_INDEX: 1,
     SHADOW_Z_INDEX: 2,
     GAME_Z_INDEX: 3,
     CONTROL_Z_INDEX: 4,
+    TEXT_Z_INDEX: 5,
     clientWidth: null,
     clientHeight: null,
     PORTRAIT: 0,
@@ -23,16 +25,21 @@ export const view = {
     twitchWhenResizeEliminationTiming: 400, // ms
     gameBoard: null,
     gameBoardElement: null,
+    chipElements: [],
 
     get currentSkinIndex () {
-        return localStorage['CurrentSkinIndex'] || view.DEFAULT_SKI_INDEX
+        return localStorage['CurrentSkinIndex'] || view.DEFAULT_SKIN_INDEX
     },
 
     set currentSkinIndex (i) {
         localStorage['CurrentSkinIndex'] = i
     },
 
-    rescaleSkin() {
+    rescale() {
+        let xScale = (view.clientWidth - game.numberOfColumns - 1) / view.resolve(view.skin.frame.width)
+        let yScale = (view.clientHeight - game.numberOfRows - 1) / view.resolve(view.skin.frame.height)
+        view.scale = xScale < yScale ? xScale : yScale
+
         const objectRescale = (obj) => {
             for (let key in obj) {
                 if ( typeof obj[key] == 'object' ) {
@@ -46,12 +53,14 @@ export const view = {
         objectRescale(this.skin)
     },
 
-    async repaint() {
+    async skinUpdate() {
         view.clientWidth = document.documentElement.clientWidth
         view.clientHeight = document.documentElement.clientHeight
         view.orientation = view.clientWidth > view.clientHeight
             ? view.LANDSCAPE
             : view.PORTRAIT
+
+
 
         if ( !view.skinsRef[ view.currentSkinIndex ].orientation[ view.orientation ].url ) {
             // Toggle orientation:
@@ -65,18 +74,40 @@ export const view = {
         let { skin } = await import(view.skinUrl + 'skin.js')
 
         view.skin = skin
+    },
 
-        let xScale = (view.clientWidth - game.numberOfColumns - 1) / view.resolve(skin.frame.width)
-        let yScale = (view.clientHeight - game.numberOfRows - 1) / view.resolve(skin.frame.height)
-        view.scale = xScale < yScale ? xScale : yScale
-        view.rescaleSkin()
+    async repaint() {
+        await view.skinUpdate()
+
+        view.rescale()
+
         if (view.gameBoardElement) {
             view.gameBoardElement.remove()
         }
         view.gameBoard = new GameBoard()
+
+        view.renderChipPool()
     },
 
-    renderElement(paramObject) {
+    renderChipPool() {
+        for ( let fieldIndex = 1; fieldIndex <= game.numberOfFields; fieldIndex++ ) {
+            let chipIndex = game.chipIndexes[fieldIndex]
+            if ( chipIndex != game.holeIndex) {
+                if ( view.chipElements[chipIndex] ) {
+                    for ( const elementKey in view.chipElements[chipIndex] ) {
+                        view.chipElements[chipIndex][elementKey].remove()
+                    }
+                }
+
+                view.chipElements[chipIndex] = new Chip({
+                    chipIndex,
+                    fieldIndex
+                })
+            }
+        }
+    },
+
+    renderElement(argsObject) {
 
         let {
             skinElement,
@@ -84,24 +115,27 @@ export const view = {
             parentElement,
             zIndex,
             id,
-            loopIndexes,
+            placeIndexes,
+            text,
             cssPropPosition,
             top,
             left,
             disabled
-        } = paramObject
+        } = argsObject
 
         // default values:
         cssPropPosition = cssPropPosition || 'absolute'
-        zIndex = zIndex || view.GAME_Z_INDEX
-        tagName = tagName || 'img'
+        zIndex = zIndex || (view.TEXT_Z_INDEX ? 10 : view.GAME_Z_INDEX)
+
+        tagName = skinElement.svg ? 'div' : (tagName || 'img')
 
         const elem = document.createElement(tagName)
 
-        let src = view.skinUrl + (
-            disabled ? skinElement.disabledUrl : skinElement.url
-        )
         if ( tagName == 'img' ) {
+            let src = view.skinUrl + (
+                disabled ? skinElement.disabledUrl : skinElement.url
+            )
+
             elem.setAttribute('src',
                 src
             )
@@ -112,15 +146,44 @@ export const view = {
         }
 
         elem.setAttribute('style', `
-            ${view.getSizeAndPositionCss(
+            ${view.getSizeAndPositionCss({
                 skinElement,
-                loopIndexes,
+                parentElement,
+                placeIndexes,
                 top,
                 left
-            )}
+            })}
             position: ${cssPropPosition};
-            z-index: ${zIndex};
-        `)
+            z-index: ${zIndex};` + '\n'
+        )
+
+        if ( skinElement.svg ) {
+            let svgStringArray = skinElement.svg.split('??')
+            let svgResolvedStringArray = svgStringArray.map(
+                (svgString) => {
+                    let svgResolvedString
+                    switch(svgString) {
+                    case 'width':
+                        svgResolvedString = elem.style.width
+                        break
+                    case 'height':
+                        svgResolvedString = elem.style.height
+                        break
+                    case 'text':
+                        svgResolvedString = text
+                        break
+                    case 'skinUrl':
+                        svgResolvedString = view.skinUrl
+                        break
+                    default:
+                        svgResolvedString = svgString
+                    }
+                    return svgResolvedString
+                }
+            )
+
+            elem.innerHTML = svgResolvedStringArray.join('')
+        }
 
         if ( parentElement ) {
             parentElement.appendChild(elem)
@@ -131,44 +194,51 @@ export const view = {
         return elem
     },
 
-    getSizeAndPositionCss(elem, loopIndexes, top, left) {
+    getSizeAndPositionCss(argsObject) {
+        let {skinElement, parentElement, placeIndexes, top, left} = argsObject
         let result = ''
 
-        result += `width: ${this.resolve(elem.width, loopIndexes)}px;
-`
-        result += `height: ${this.resolve(elem.height, loopIndexes)}px;
-`
+        let width = skinElement.width || parentElement.style.width
+        let height = skinElement.height || parentElement.style.height
+
+        result +=
+            `width: ${this.resolve(width, placeIndexes)}px;` + '\n'
+        result +=
+            `height: ${this.resolve(height, placeIndexes)}px;` + '\n'
+
         if ( !left ) {
-            if ( elem.left || elem.left == 0 ) {
-                result += `left: ${this.resolve(elem.left, loopIndexes)}px;
-`
+            if ( skinElement.left || skinElement.left == 0 ) {
+                result +=
+                    `left: ${this.resolve(skinElement.left, placeIndexes)}px;` + '\n'
+            } else if ( skinElement.right || skinElement.right == 0 ) {
+                result +=
+                    `right: ${this.resolve(skinElement.right, placeIndexes)}px;` + '\n'
             } else {
-                result += `right: ${this.resolve(elem.right, loopIndexes)}px;
-`
+                result += 'left: 0;' + '\n'
             }
         } else {
-            result += `left: ${left};
-`
+            result += `left: ${left};` + '\n'
         }
 
         if ( !top ) {
-            if ( elem.top || elem.top == 0 ) {
-                result += `top: ${this.resolve(elem.top, loopIndexes)}px;
-`
+            if ( skinElement.top || skinElement.top == 0 ) {
+                result +=
+                    `top: ${this.resolve(skinElement.top, placeIndexes)}px;` + '\n'
+            } else if ( skinElement.bottom || skinElement.bottom == 0 ) {
+                result +=
+                    `bottom: ${this.resolve(skinElement.bottom, placeIndexes)}px;` + '\n'
             } else {
-                result += `bottom: ${this.resolve(elem.bottom, loopIndexes)}px;
-`
+                result += 'top: 0;' + '\n'
             }
         } else {
-            result += `top: ${top};
-`
+            result += `top: ${top};` + '\n'
         }
 
         return result
     },
 
-    resolve(param, loopIndexes) {
-        let { xLoopIndex, yLoopIndex } = loopIndexes || {}
+    resolve(param, placeIndexes) {
+        let { xPlaceIndex, yPlaceIndex } = placeIndexes || {}
         const expression = parseInt(param)
         if ( !Number.isNaN(expression) ) {
             return expression // This is the number
@@ -184,7 +254,10 @@ export const view = {
                 && expressionPart != '('
                 && expressionPart != ')'
             ) {
-                expressionParts[i] = this.resolve(eval(expressionPart), loopIndexes)
+                expressionParts[i] = this.resolve(
+                    eval(expressionPart),
+                    placeIndexes
+                )
             }
         })
 
