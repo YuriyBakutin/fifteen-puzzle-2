@@ -4,76 +4,85 @@ import { game } from './game.js'
 'use strict'
 
 onload = async () => {
-    window.view = view
 
     let { skins } = await import('./skins/skins.js')
     view.skinsRef = skins
 
+    restart()
+}
+
+const restart = async () => {
+    game.randomReplace()
     await view.repaint()
 }
 
 onclick = (event) => {
     const clickEventName = 'onClick' + toPascal(event.target.id)
 
-    handling(clickEventName)
+    clickHandling(clickEventName)
 }
 
-const handling = (clickEventName) => {
+const clickHandling = (clickEventName) => {
     if ( clickEventName.slice(0,'onClickChip'.length) == 'onClickChip' ) {
-        handlers.onClickChip(clickEventName.slice('onClickChip'.length))
+        clickHandlers.onClickChip(clickEventName.slice('onClickChip'.length))
         return
     }
 
-    if ( handlers[clickEventName] ) {
-        handlers[clickEventName]()
+    if ( clickHandlers[clickEventName] ) {
+        clickHandlers[clickEventName]()
     }
 }
 
-const handlers = {
-    onClickAddRow: () => {
+const clickHandlers = {
+    onClickAddRow() {
         if ( view.addRowElement.disabled ) {
             return
         }
         game.numberOfRows++
-        view.repaint()
+        restart()
     },
-    onClickRemoveRow: () => {
+    onClickRemoveRow() {
         if ( view.removeRowElement.disabled ) {
             return
         }
         game.numberOfRows--
-        view.repaint()
+        restart()
     },
-    onClickAddColumn: () => {
+    onClickAddColumn() {
         if ( view.addColumnElement.disabled ) {
             return
         }
         game.numberOfColumns++
-        view.repaint()
+        restart()
     },
-    onClickRemoveColumn: () => {
+    onClickRemoveColumn() {
         if ( view.removeColumnElement.disabled ) {
             return
         }
         game.numberOfColumns--
-        view.repaint()
+        restart()
     },
-    onClickNextSkin: () => {
+    onClickNextSkin() {
         view.currentSkinIndex++
         if ( view.currentSkinIndex == view.skinsRef.length ) {
             view.currentSkinIndex = 0
         }
+        view.skinUpdate()
         view.repaint()
     },
-    onClickPreviousSkin: () => {
+    onClickPreviousSkin() {
         view.currentSkinIndex--
         if ( view.currentSkinIndex < 0 ) {
             view.currentSkinIndex = view.skinsRef.length - 1
         }
+        view.skinUpdate()
         view.repaint()
     },
-    onClickRestart: () => {
-        game.randomReplace()
+    onClickRestart() {
+        restart()
+    },
+    onClickChip() {
+
     }
 }
 

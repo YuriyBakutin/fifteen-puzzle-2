@@ -17,13 +17,13 @@ export const skin = {
             width: 'view.skin.chip.size',
             height: 'view.skin.chip.size',
             left: 0,
-            top: 'view.skin.chip.size * yLoopIndex',
+            top: 'view.skin.chip.size * yPlaceIndex',
         },
         topShadowLine: {
             url: 'top-shadow-line.svg',
             width: 'view.skin.chip.size',
             height: 'view.skin.chip.size',
-            left: 'view.skin.chip.size * xLoopIndex',
+            left: 'view.skin.chip.size * xPlaceIndex',
             top: 0
         }
     },
@@ -36,7 +36,7 @@ export const skin = {
             url: 'frame-top.svg',
             width: 'view.skin.chip.size',
             height: 100,
-            left: 'view.skin.frame.leftLineTile.width + view.skin.chip.size * ( xLoopIndex + 1 )',
+            left: 'view.skin.frame.leftLineTile.width + view.skin.chip.size * ( xPlaceIndex + 1 )',
             top: 0
         },
         rightLineTile: {
@@ -44,14 +44,14 @@ export const skin = {
             width: 100,
             height: 'view.skin.chip.size',
             right: 0,
-            top: 'view.skin.frame.topLineTile.height + view.skin.chip.size * ( yLoopIndex + 1 )',
+            top: 'view.skin.frame.topLineTile.height + view.skin.chip.size * ( yPlaceIndex + 1 )',
         },
         bottomLineTile: {
             url: 'frame-bottom.svg',
             width: 'view.skin.chip.size * ( game.numberOfColumns - 2 )',
             width: 'view.skin.chip.size',
             height: 100,
-            left: 'view.skin.frame.leftLineTile.width + view.skin.chip.size * ( xLoopIndex + 1 )',
+            left: 'view.skin.frame.leftLineTile.width + view.skin.chip.size * ( xPlaceIndex + 1 )',
             bottom: 0
         },
         leftLineTile: {
@@ -59,7 +59,7 @@ export const skin = {
             width: 100,
             height: 'view.skin.chip.size',
             left: 0,
-            top: 'view.skin.frame.topLineTile.height + view.skin.chip.size * ( yLoopIndex + 1 )',
+            top: 'view.skin.frame.topLineTile.height + view.skin.chip.size * ( yPlaceIndex + 1 )',
         },
         topLeftCorner: {
             url: 'frame-top-left-corner.svg',
@@ -153,7 +153,7 @@ export const skin = {
                 width: 'view.skin.frame.buttons.width',
                 height: 'view.skin.frame.buttons.height',
                 left: 'view.skin.frame.buttons.removeColumnImage.left',
-                bottom: 'view.skin.frame.height / 3 - 30'
+                bottom: '( view.skin.frame.height / 3 ) - view.skin.frame.buttons.height * 2'
             },
             addColumn: {
                 url: 'plus-symbol.svg',
@@ -167,14 +167,14 @@ export const skin = {
                 url: 'skin-symbol.svg',
                 width: 21,
                 height: 21,
-                left: 'view.skin.frame.buttons.removeColumn.left - 2',
-                top: 'view.skin.frame.height / 3 - 30'
+                left: 'view.skin.frame.buttons.removeColumn.left',
+                top: 'view.skin.frame.height / 3 - view.skin.frame.buttons.height * 2'
             },
             nextSkinImage: {
                 url: 'skin-symbol.svg',
                 width: 21,
                 height: 21,
-                right: 'view.skin.frame.buttons.removeColumn.left - 2',
+                right: 'view.skin.frame.buttons.previousSkinImage.left',
                 top: 'view.skin.frame.buttons.previousSkinImage.top'
             },
             previousSkin: {
@@ -199,19 +199,44 @@ export const skin = {
         url: 'backside-tile.svg',
         width: 'view.skin.chip.size',
         height: 'view.skin.chip.size',
-        left: 'view.skin.chip.size * xLoopIndex',
-        top: 'view.skin.chip.size * yLoopIndex',
+        left: 'view.skin.chip.size * xPlaceIndex',
+        top: 'view.skin.chip.size * yPlaceIndex',
     },
     chip: {
-        url: 'chip.png',
         size: 100,
+        chipFrame: {
+            width: 'view.skin.chip.size',
+            height: 'view.skin.chip.size',
+            left: 'view.skin.chip.size * xPlaceIndex',
+            top: 'view.skin.chip.size * yPlaceIndex',
+        },
+        chip: {
+            url: 'chip.svg'
+        },
         label: {
-            fontUrl: 'fonts/LobsterLat.woff2',
-            fontFamily: 'Lobster',
-            fontSize: 70,
-            opacity: 0.86160713,
-            left: 'view.skin.frame.chip.size / 2',
-            top: '( view.skin.frame.chip.size - view.skin.frame.chip.label.fontSize ) / 2'
+            // Notation ??...?? for replace by actual data
+            // See view.renderElement()
+            svg: `
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="??width??"
+                height="??height??"
+                viewBox="0 0 95 95">
+                <defs>
+                    <style type="text/css">
+                        <![CDATA[
+                            @font-face {
+                                font-family: Aspergit;
+                                src: url('??skinUrl??fonts/aspergit.woff2');
+                            }
+                        ]]>
+                    </style>
+                </defs>
+                <text
+                    style="font-family:Aspergit;text-align:center;font-size:70px;text-anchor:middle;fill:#ff6600"
+                    x="47.5"
+                    y="73.3">??text??</text>
+            </svg>` + "\n"
         },
         shadow: {
             url: 'chip-shadow.svg',

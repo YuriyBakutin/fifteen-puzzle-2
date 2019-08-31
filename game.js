@@ -1,3 +1,6 @@
+import { view } from './view.js'
+import { Chip } from './Chip.js'
+
 'use strict'
 
 export const game = {
@@ -7,34 +10,35 @@ export const game = {
     MIN_NUMBER_OF_ROWS: 2,
     DEFAULT_NUMBER_OF_COLUMNS: 4,
     DEFAULT_NUMBER_OF_ROWS: 4,
+    // For example:
     chipIndexes: [],
     _numberOfFields: null,
 
-    _recalcNumberOfFields () {
+    _recalcNumberOfFields() {
         game._numberOfFields = game.numberOfColumns * game.numberOfRows
     },
 
-    get numberOfColumns () {
+    get numberOfColumns() {
         return localStorage['numberOfColumns'] || game.DEFAULT_NUMBER_OF_COLUMNS
     },
 
-    set numberOfColumns (i) {
+    set numberOfColumns(i) {
         localStorage['numberOfColumns'] = i
         game.chipIndexes = []
         game._recalcNumberOfFields()
     },
 
-    get numberOfRows () {
+    get numberOfRows() {
         return localStorage['numberOfRows'] || game.DEFAULT_NUMBER_OF_ROWS
     },
 
-    set numberOfRows (i) {
+    set numberOfRows(i) {
         localStorage['numberOfRows'] = i
         game.chipIndexes = []
         game._recalcNumberOfFields()
     },
 
-    get numberOfFields () {
+    get numberOfFields() {
         if ( !game._numberOfFields ) {
             game._recalcNumberOfFields()
         }
@@ -42,37 +46,45 @@ export const game = {
         return game._numberOfFields
     },
 
-    get holeIndex () {
+    get holeIndex() {
         return game.numberOfFields
     },
 
-    randomReplace () {
-        let randomNumbers = [] // indexed from 0 for using method "sort()"
+    randomReplace() {
+        let randomNumbers = []
 
-        for( let i = 0, n = game.numberOfFields; i < n; i++ ) {
-            randomNumbers[i] = { number: i + 1, weight: Math.random() }
+        randomNumbers[0] = { weight: -1 } // To exclude from sorting
+
+        for( let fieldIndex = 1; fieldIndex <= game.numberOfFields; fieldIndex++ ) {
+            randomNumbers[fieldIndex] = { number: fieldIndex, weight: Math.random() }
         }
 
         randomNumbers.sort((a, b) => a.weight - b.weight)
 
+        // holeStringNumber is used for manipulations
+        // on achievement of possibility of a solution
         let holeStringNumber
 
-        for( let i = 1, n = game.numberOfFields; i <= n; i++ ) {
-            game.chipIndexes[i] = randomNumbers[i - 1].number
-            if ( game.chipIndexes[i] == game.holeIndex ) {
-                holeStringNumber = Math.floor((i - 1) / game.numberOfRows) + 1
-                console.log('holeStringNumber: ', holeStringNumber);
+        for( let fieldIndex = 1; fieldIndex <= game.numberOfFields; fieldIndex++ ) {
+            game.chipIndexes[fieldIndex] = randomNumbers[fieldIndex].number
+
+            if ( game.chipIndexes[fieldIndex] == game.holeIndex ) {
+                holeStringNumber = Math.floor((fieldIndex - 1) / game.numberOfRows) + 1
             }
         }
 
-        // Checking for a possibility solution
+        // Checking for a possibility of a solution
         let displacedPairsCounter = 0;
 
-        for(let i = 1; i < game.numberOfFields; i++) {
-            for(let j = i + 1; j <= game.numberOfFields; j++) {
+        for ( let fieldIndex = 1; fieldIndex < game.numberOfFields; fieldIndex++ ) {
+            for(
+                let fieldIndex2 = fieldIndex + 1;
+                fieldIndex2 <= game.numberOfFields;
+                fieldIndex2++
+            ) {
                 if(
-                    game.chipIndexes[i] > game.chipIndexes[j]
-                    && game.chipIndexes[i] != game.holeIndex
+                    game.chipIndexes[fieldIndex] > game.chipIndexes[fieldIndex2]
+                    && game.chipIndexes[fieldIndex] != game.holeIndex
                 ) {
                     displacedPairsCounter++;
                 }
