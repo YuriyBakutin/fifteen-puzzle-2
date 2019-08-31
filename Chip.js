@@ -22,11 +22,11 @@ export class Chip {
             id: 'chip' + chipIndex
         })
 
-        // chipElementsObj.shadow = view.renderElement({
-        //     skinElement: view.skin.chip.shadow,
-        //     parentElement: chipElementsObj.frame,
-        //     zIndex: view.SHADOW_Z_INDEX
-        // })
+        chipElementsObj.shadow = view.renderElement({
+            skinElement: view.skin.chip.shadow,
+            parentElement: chipElementsObj.frame,
+            zIndex: view.SHADOW_Z_INDEX
+        })
 
         chipElementsObj.chip = view.renderElement({
             skinElement: view.skin.chip.chip,
