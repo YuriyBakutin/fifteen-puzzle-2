@@ -93,9 +93,8 @@ export const skin = {
             width: 18,
             height: 18,
             startAndPause: {
-                // url: 'play-symbol.svg',
-                url: 'pause-symbol.svg',
-                startUrl: 'play-symbol.svg',
+                url: 'play-symbol.svg',
+                startUrl: 'pause-symbol.svg',
                 pauseUrl: 'pause-symbol.svg',
                 width: 'view.skin.frame.buttons.width',
                 height: 'view.skin.frame.buttons.height',
@@ -242,8 +241,9 @@ export const skin = {
             url: 'chip-shadow.svg',
             width: 140,
             height: 140,
-            left: '( view.skin.chip.size - view.skin.chip.shadow.width ) / 2',
-            top: '( view.skin.chip.size - view.skin.chip.shadow.width ) / 2'
+            // positioned relative to gameField
+            left: 'view.skin.chip.size * xPlaceIndex + ( view.skin.chip.size - view.skin.chip.shadow.width ) / 2',
+            top: 'view.skin.chip.size * yPlaceIndex + ( view.skin.chip.size - view.skin.chip.shadow.width ) / 2'
         }
     },
     indicators: {

@@ -241,8 +241,9 @@ export const skin = {
             url: 'chip-shadow.svg',
             width: 140,
             height: 140,
-            left: '( view.skin.chip.size - view.skin.chip.shadow.width ) / 2',
-            top: '( view.skin.chip.size - view.skin.chip.shadow.width ) / 2'
+            // positioned relative to gameField
+            left: 'view.skin.chip.size * xPlaceIndex + ( view.skin.chip.size - view.skin.chip.shadow.width ) / 2',
+            top: 'view.skin.chip.size * yPlaceIndex + ( view.skin.chip.size - view.skin.chip.shadow.width ) / 2'
         }
     },
     indicators: {
