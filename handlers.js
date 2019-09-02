@@ -8,6 +8,8 @@ onload = async () => {
     let { skins } = await import('./skins/skins.js')
     view.skinsRef = skins
 
+    document.addEventListener('gameOver', onGameOver)
+
     restart()
 }
 
@@ -17,7 +19,7 @@ const restart = async () => {
 }
 
 const getChipId = (element) => {
-    if ( element == document.body ) {
+    if ( !element || element == document.body ) {
         return null
     }
 
@@ -28,17 +30,43 @@ const getChipId = (element) => {
     return getChipId(element.parentNode)
 }
 
-onmouseup = (event) => {
+let chipPickedIndex
+let mouseDownPoint = {}
+
+onmousedown = (event) => {
     const chipId = getChipId(event.target)
     if ( !chipId ) {
         return
     }
-    const mouseUpEventName = 'onMouseUp' + toPascal(chipId)
 
-    if ( mouseUpEventName.slice(0,'onMouseUpChip'.length) == 'onMouseUpChip' ) {
-        mouseEventHandlers.onMouseUpChip(mouseUpEventName.slice('onMouseUpChip'.length))
+    mouseDownPoint.x = event.clientX
+    mouseDownPoint.y = event.clientY
+
+    const mouseDownEventName = 'onMouseDown' + toPascal(chipId)
+
+    if ( mouseDownEventName.slice(0,'onMouseDownChip'.length) == 'onMouseDownChip' ) {
+        mouseEventHandlers.onMouseDownChip(
+            mouseDownEventName.slice('onMouseDownChip'.length)
+        )
         return
     }
+}
+
+onmousemove = (event) => {
+    if ( !chipPickedIndex ) {
+        return
+    }
+
+    let mouseMoveShift = {
+        x: event.clientX - mouseDownPoint.x,
+        y: event.clientY - mouseDownPoint.y
+    }
+
+    mouseEventHandlers.onMouseMove(mouseMoveShift)
+}
+
+onmouseup = () => {
+    mouseEventHandlers.onMouseUp()
 }
 
 onclick = (event) => {
@@ -46,59 +74,6 @@ onclick = (event) => {
 
     if ( mouseEventHandlers[clickEventName] ) {
         mouseEventHandlers[clickEventName]()
-    }
-}
-
-const mouseEventHandlers = {
-    onClickAddRow() {
-        if ( view.addRowElement.disabled ) {
-            return
-        }
-        game.numberOfRows++
-        restart()
-    },
-    onClickRemoveRow() {
-        if ( view.removeRowElement.disabled ) {
-            return
-        }
-        game.numberOfRows--
-        restart()
-    },
-    onClickAddColumn() {
-        if ( view.addColumnElement.disabled ) {
-            return
-        }
-        game.numberOfColumns++
-        restart()
-    },
-    onClickRemoveColumn() {
-        if ( view.removeColumnElement.disabled ) {
-            return
-        }
-        game.numberOfColumns--
-        restart()
-    },
-    onClickNextSkin() {
-        view.currentSkinIndex++
-        if ( view.currentSkinIndex == view.skinsRef.length ) {
-            view.currentSkinIndex = 0
-        }
-        view.skinUpdate()
-        view.repaint()
-    },
-    onClickPreviousSkin() {
-        view.currentSkinIndex--
-        if ( view.currentSkinIndex < 0 ) {
-            view.currentSkinIndex = view.skinsRef.length - 1
-        }
-        view.skinUpdate()
-        view.repaint()
-    },
-    onClickRestart() {
-        restart()
-    },
-    onMouseUpChip(chipIndex) {
-        console.log('chipIndex: ', chipIndex)
     }
 }
 
@@ -110,6 +85,82 @@ const toPascal = (nameInCamel) => {
     return firstChar.toUpperCase() + nameInCamel.slice(1)
 }
 
+const mouseEventHandlers = {
+    onClickAddRow() {
+        if ( view.addRowElement.disabled ) {
+            return
+        }
+        game.numberOfRows++
+        restart()
+    },
+
+    onClickRemoveRow() {
+        if ( view.removeRowElement.disabled ) {
+            return
+        }
+        game.numberOfRows--
+        restart()
+    },
+
+    onClickAddColumn() {
+        if ( view.addColumnElement.disabled ) {
+            return
+        }
+        game.numberOfColumns++
+        restart()
+    },
+
+    onClickRemoveColumn() {
+        if ( view.removeColumnElement.disabled ) {
+            return
+        }
+        game.numberOfColumns--
+        restart()
+    },
+
+    onClickNextSkin() {
+        view.currentSkinIndex++
+        if ( view.currentSkinIndex == view.skinsRef.length ) {
+            view.currentSkinIndex = 0
+        }
+        view.skinUpdate()
+        view.repaint()
+    },
+
+    onClickPreviousSkin() {
+        view.currentSkinIndex--
+        if ( view.currentSkinIndex < 0 ) {
+            view.currentSkinIndex = view.skinsRef.length - 1
+        }
+        view.skinUpdate()
+        view.repaint()
+    },
+
+    onClickRestart() {
+        restart()
+    },
+
+    onMouseDownChip(chipIndex) {
+        if ( Number.isNaN(+chipIndex) ) {
+            return
+        }
+
+        chipPickedIndex = chipIndex
+
+        game.setNextPosition(chipIndex)
+        view.defineMovingElements(chipPickedIndex)
+    },
+
+    onMouseUp() {
+        chipPickedIndex = null
+        view.moveChipByGame()
+    },
+
+    onMouseMove(mouseMoveShift) {
+        view.moveChipByUser(mouseMoveShift)
+    }
+}
+
 onresize = async () => {
     clearTimeout(view.twitchWhenResizeEliminationTimerId)
     view.twitchWhenResizeEliminationTimerId = setTimeout(async () =>{
@@ -117,3 +168,8 @@ onresize = async () => {
         await view.repaint()
     }, view.twitchWhenResizeEliminationTiming)
 }
+
+const onGameOver = () => {
+    console.log('Game over!')
+}
+

@@ -13,6 +13,9 @@ export const game = {
     // For example:
     chipIndexes: [],
     _numberOfFields: null,
+    movingChipsParams: [],
+    gameOverEvent: new Event('gameOver'),
+    step: {},
 
     _recalcNumberOfFields() {
         game._numberOfFields = game.numberOfColumns * game.numberOfRows
@@ -75,6 +78,47 @@ export const game = {
 
         // Checking for a possibility of a solution
         let displacedPairsCounter = 0;
+        for ( let fieldIndex = 1; fieldIndex < game.numberOfFields; fieldIndex++ ) {
+            for(
+                let fieldIndex2 = fieldIndex + 1;
+                fieldIndex2 <= game.numberOfFields;
+                fieldIndex2++
+            ) {
+                if(
+                    game.chipIndexes[fieldIndex] > game.chipIndexes[fieldIndex2]
+                    && game.chipIndexes[fieldIndex] != game.holeIndex
+                ) {
+                    displacedPairsCounter++;
+                }
+            }
+        }
+
+        let invariant = displacedPairsCounter + holeStringNumber
+
+        // let solutionIsPossible = Boolean((invariant + 1) % 2)
+        let solutionIsPossible = game.checkForSolvable()
+
+        // Checking for a possibility of a solution
+        if ( !solutionIsPossible ) {
+            if(holeStringNumber != 1) {
+                let n = game.chipIndexes[1];
+                game.chipIndexes[1] = game.chipIndexes[2];
+                game.chipIndexes[2] = n;
+            } else {
+                let n = game.chipIndexes[game.numberOfFields];
+                game.chipIndexes[game.numberOfFields] =
+                    game.chipIndexes[game.numberOfFields - 1];
+                game.chipIndexes[game.numberOfFields - 1] = n;
+            }
+        }
+
+        if ( game.endGameCheck() ) {
+            game.randomReplace()
+        }
+    },
+
+    checkForSolvable() {
+        let displacedPairsCounter = 0;
 
         for ( let fieldIndex = 1; fieldIndex < game.numberOfFields; fieldIndex++ ) {
             for(
@@ -91,19 +135,119 @@ export const game = {
             }
         }
 
-        let solutionIsPossible = Boolean((displacedPairsCounter + holeStringNumber + 1) % 2)
+        let holeFieldIndex = game.chipIndexes.findIndex(
+            (chipIndex) => chipIndex == game.holeIndex
+        )
 
-        if ( !solutionIsPossible ) {
-            if(holeStringNumber != 1) {
-                let n = game.chipIndexes[1];
-                game.chipIndexes[1] = game.chipIndexes[2];
-                game.chipIndexes[2] = n;
-            } else {
-                let n = game.chipIndexes[game.numberOfFields];
-                game.chipIndexes[game.numberOfFields] =
-                    game.chipIndexes[game.numberOfFields - 1];
-                game.chipIndexes[game.numberOfFields - 1] = n;
+        let holeStringNumber = Chip.getYPlaceIndex(holeFieldIndex)
+        let invariantByEven = displacedPairsCounter + holeStringNumber * (
+            +game.numberOfColumns + 1
+        ) // If even, game has a solution
+
+        return !Boolean((invariantByEven) % 2)
+    },
+
+    setNextPosition(pickedChipIndex) {
+        let pickedFieldIndex = game.chipIndexes.findIndex(
+            (chipIndex) => chipIndex == pickedChipIndex
+        )
+
+        let holeFieldIndex = game.chipIndexes.findIndex(
+            (chipIndex) => chipIndex == game.holeIndex
+        )
+
+        let xPlacePickedChipIndex = Chip.getXPlaceIndex(pickedFieldIndex)
+        let xPlaceHoleIndex = Chip.getXPlaceIndex(holeFieldIndex)
+        let yPlacePickedChipIndex = Chip.getYPlaceIndex(pickedFieldIndex)
+        let yPlaceHoleIndex = Chip.getYPlaceIndex(holeFieldIndex)
+
+        if ( xPlacePickedChipIndex == xPlaceHoleIndex ) {
+            game.movingChipsParams = []
+            let yDistance = yPlacePickedChipIndex - yPlaceHoleIndex
+            game.step.x = null
+            game.step.y = Math.sign(yDistance)
+            let yCurrentPlaceIndex = yPlaceHoleIndex
+
+            do {
+                let currentFieldIndex = Chip.getFieldIndex(
+                    xPlacePickedChipIndex,
+                    yCurrentPlaceIndex
+                )
+
+                let currentMovingChipIndex = game.chipIndexes[currentFieldIndex]
+
+                let yNextPlaceIndex = yCurrentPlaceIndex + game.step.y
+
+                let nextFieldIndex = Chip.getFieldIndex(
+                    xPlacePickedChipIndex,
+                    yNextPlaceIndex
+                )
+
+                game.movingChipsParams.push(
+                    {
+                        chipIndex: game.chipIndexes[nextFieldIndex],
+                        fieldIndexBeforeMoving: nextFieldIndex,
+                        fieldIndex: currentFieldIndex
+                    }
+                )
+
+                game.chipIndexes[currentFieldIndex] = game.chipIndexes[nextFieldIndex]
+                yCurrentPlaceIndex = yNextPlaceIndex
+            } while ( yCurrentPlaceIndex != yPlacePickedChipIndex )
+            game.chipIndexes[pickedFieldIndex] = game.holeIndex
+            game.endGameCheck()
+        }
+
+        if ( yPlacePickedChipIndex == yPlaceHoleIndex ) {
+            game.movingChipsParams = []
+            let xDistance = xPlacePickedChipIndex - xPlaceHoleIndex
+            game.step.y = null
+            game.step.x = Math.sign(xDistance)
+            let xCurrentPlaceIndex = xPlaceHoleIndex
+
+            do {
+                let currentFieldIndex = Chip.getFieldIndex(
+                    xCurrentPlaceIndex,
+                    yPlacePickedChipIndex
+                )
+                let currentMovingChipIndex = game.chipIndexes[currentFieldIndex]
+
+                let xNextPlaceIndex = xCurrentPlaceIndex + game.step.x
+
+                let nextFieldIndex = Chip.getFieldIndex(
+                    xNextPlaceIndex,
+                    yPlacePickedChipIndex
+                )
+
+                game.movingChipsParams.push(
+                    {
+                        chipIndex: game.chipIndexes[nextFieldIndex],
+                        fieldIndexBeforeMoving: nextFieldIndex,
+                        fieldIndex: currentFieldIndex
+                    }
+                )
+
+                game.chipIndexes[currentFieldIndex] = game.chipIndexes[nextFieldIndex]
+                xCurrentPlaceIndex = xNextPlaceIndex
+            } while ( xCurrentPlaceIndex != xPlacePickedChipIndex )
+            game.chipIndexes[pickedFieldIndex] = game.holeIndex
+            game.endGameCheck()
+        }
+    },
+
+    endGameCheck() {
+        game.checkForSolvable()
+
+        let dislocation = game.chipIndexes.find(
+            (chipIndex, fieldIndex) => {
+                return chipIndex && chipIndex != fieldIndex
             }
+        )
+        if ( !dislocation ) {
+            document.dispatchEvent(game.gameOverEvent)
+            return true
+        } else {
+            return false
         }
     }
 }

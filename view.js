@@ -12,6 +12,7 @@ export const view = {
     CHIP_POOL_Z_INDEX: 4,
     CONTROL_Z_INDEX: 5,
     TEXT_Z_INDEX: 6,
+    MOVING_BY_GAME_STEP_DURATION: 0.5,
     clientWidth: null,
     clientHeight: null,
     PORTRAIT: 0,
@@ -27,6 +28,9 @@ export const view = {
     gameBoard: null,
     gameBoardElement: null,
     chipElements: [],
+    movingChipsParams: [],
+    movingChipsShadowParams: [],
+    remainingPathRatio: null,
 
     get currentSkinIndex () {
         return localStorage['CurrentSkinIndex'] || view.DEFAULT_SKIN_INDEX
@@ -122,7 +126,8 @@ export const view = {
             cssPropPosition,
             top,
             left,
-            disabled
+            disabled,
+            classCSS
         } = argsObject
 
         // default values:
@@ -188,6 +193,10 @@ export const view = {
             elem.style.zIndex = zIndex
 
             elem.innerHTML = svgResolvedStringArray.join('')
+        }
+
+        if ( classCSS ) {
+            elem.classList.add(classCSS)
         }
 
         if ( parentElement ) {
@@ -267,5 +276,206 @@ export const view = {
         })
 
         return eval(expressionParts.join(' '))
+    },
+
+    defineMovingElements(chipPickedIndex) {
+        let chipPickedElement = document.getElementById(
+            'chip' + chipPickedIndex
+        )
+
+        let chipShadowPickedElement = document.getElementById(
+            'chipShadow' + chipPickedIndex
+        )
+
+        view.remainingPathRatio = 1
+
+        view.movingChipsParams = []
+        view.movingChipsShadowParams = []
+        for ( let movingChipIndex of game.movingChipsParams ) {
+            let chipIndex = movingChipIndex.chipIndex
+            let placeIndexes = {
+                xPlaceIndex: Chip.getXPlaceIndex(movingChipIndex.fieldIndex),
+                yPlaceIndex: Chip.getYPlaceIndex(movingChipIndex.fieldIndex)
+            }
+
+            let chipShadowElement = document.getElementById(
+                    'chipShadow' + chipIndex
+                )
+
+            view.moveAnimationOff(chipShadowElement)
+
+            let placeIndexesBeforeMoving = {
+                xPlaceIndex: Chip.getXPlaceIndex(movingChipIndex.fieldIndexBeforeMoving),
+                yPlaceIndex: Chip.getYPlaceIndex(movingChipIndex.fieldIndexBeforeMoving)
+            }
+
+            let leftFinishMoving = this.resolve(
+                view.skin.chip.shadow.left,
+                placeIndexes
+            )
+
+            let topFinishMoving = this.resolve(
+                view.skin.chip.shadow.top,
+                placeIndexes
+            )
+
+            let leftBeforeMoving = this.resolve(
+                view.skin.chip.shadow.left,
+                placeIndexesBeforeMoving
+            )
+
+            let topBeforeMoving = this.resolve(
+                view.skin.chip.shadow.top,
+                placeIndexesBeforeMoving
+            )
+
+            view.movingChipsShadowParams[chipIndex] = {
+                element: chipShadowElement,
+                leftFinishMoving,
+                topFinishMoving,
+                leftBeforeMoving,
+                topBeforeMoving
+            }
+
+            let chipElement = document.getElementById(
+                    'chip' + chipIndex
+                )
+
+            view.moveAnimationOff(chipElement)
+
+            leftFinishMoving = this.resolve(
+                view.skin.chip.chipFrame.left,
+                placeIndexes
+            )
+
+            topFinishMoving = this.resolve(
+                view.skin.chip.chipFrame.top,
+                placeIndexes
+            )
+
+            leftBeforeMoving = this.resolve(
+                view.skin.chip.chipFrame.left,
+                placeIndexesBeforeMoving
+            )
+
+            topBeforeMoving = this.resolve(
+                view.skin.chip.chipFrame.top,
+                placeIndexesBeforeMoving
+            )
+
+            view.movingChipsParams[chipIndex] = {
+                element: chipElement,
+                leftFinishMoving,
+                topFinishMoving,
+                leftBeforeMoving,
+                topBeforeMoving
+            }
+        }
+    },
+
+    moveAnimationOn(element) {
+        element.style['transition-duration'] =
+            view.MOVING_BY_GAME_STEP_DURATION * view.remainingPathRatio + 's'
+    },
+
+    moveAnimationOff(element) {
+        element.style['transition-duration'] = null
+    },
+
+    moveChipByGame() { // By click (mouseup)
+        for ( let movingChipIndex of game.movingChipsParams ) {
+            let chipIndex = movingChipIndex.chipIndex
+
+            let movingChipShadow = view.movingChipsShadowParams[chipIndex]
+            let movingChipShadowElement = movingChipShadow.element
+            view.moveAnimationOn(movingChipShadowElement)
+
+            let leftFinishMoving = movingChipShadow.leftFinishMoving
+            let topFinishMoving = movingChipShadow.topFinishMoving
+            movingChipShadowElement.style.left = leftFinishMoving + 'px'
+            movingChipShadowElement.style.top = topFinishMoving + 'px'
+
+            let movingChip = view.movingChipsParams[chipIndex]
+            let movingChipElement = movingChip.element
+            view.moveAnimationOn(movingChipElement)
+
+            leftFinishMoving = movingChip.leftFinishMoving
+            topFinishMoving = movingChip.topFinishMoving
+            movingChipElement.style.left = leftFinishMoving + 'px'
+            movingChipElement.style.top = topFinishMoving + 'px'
+        }
+    },
+
+    moveChipByUser(mouseMoveShift) { // Drag and drop
+        let lastPathLength
+        if ( game.step.x ) {
+            const MIN = 0
+            const MAX = 1
+            let range = [ 0, -game.step.x * view.skin.chip.size ]
+            range.sort((a, b) => a - b)
+            if ( range[MIN] > mouseMoveShift.x ) {
+                mouseMoveShift.x = range[MIN]
+            } else if ( range[MAX] < mouseMoveShift.x ) {
+                mouseMoveShift.x = range[MAX]
+            }
+
+            lastPathLength = Math.abs(mouseMoveShift.x)
+
+            for ( let gameMovingChipParams of game.movingChipsParams ) {
+                let movingChipParams = view.movingChipsParams[
+                    gameMovingChipParams.chipIndex
+                ]
+
+                let movingChipElement = movingChipParams.element
+                let leftBeforeMoving = movingChipParams.leftBeforeMoving
+                let chipNewLeft = leftBeforeMoving + mouseMoveShift.x
+                movingChipElement.style.left = chipNewLeft + 'px'
+
+                let movingChipShadowParams = view.movingChipsShadowParams[
+                    gameMovingChipParams.chipIndex
+                ]
+
+                let movingChipShadowElement = movingChipShadowParams.element
+                let chipShadowLeftBeforeMoving = movingChipShadowParams.leftBeforeMoving
+                let chipShadowNewLeft = chipShadowLeftBeforeMoving + mouseMoveShift.x
+                movingChipShadowElement.style.left = chipShadowNewLeft + 'px'
+            }
+        }
+
+        if ( game.step.y ) {
+            const MIN = 0
+            const MAX = 1
+            let range = [ 0, -game.step.y * view.skin.chip.size ]
+            range.sort((a, b) => a - b)
+            if ( range[MIN] > mouseMoveShift.y ) {
+                mouseMoveShift.y = range[MIN]
+            } else if ( range[MAX] < mouseMoveShift.y ) {
+                mouseMoveShift.y = range[MAX]
+            }
+
+            lastPathLength = Math.abs(mouseMoveShift.y)
+
+            for ( let gameMovingChipParams of game.movingChipsParams ) {
+                let movingChipParams = view.movingChipsParams[
+                    gameMovingChipParams.chipIndex
+                ]
+
+                let movingChipElement = movingChipParams.element
+                let topBeforeMoving = movingChipParams.topBeforeMoving
+                let chipNewTop = topBeforeMoving + mouseMoveShift.y
+                movingChipElement.style.top = chipNewTop + 'px'
+
+                let movingChipShadowParams = view.movingChipsShadowParams[
+                    gameMovingChipParams.chipIndex
+                ]
+
+                let movingChipShadowElement = movingChipShadowParams.element
+                let chipShadowTopBeforeMoving = movingChipShadowParams.topBeforeMoving
+                let chipShadowNewTop = chipShadowTopBeforeMoving + mouseMoveShift.y
+                movingChipShadowElement.style.top = chipShadowNewTop + 'px'
+            }
+        }
+
+        view.remainingPathRatio = (view.skin.chip.size - lastPathLength) / view.skin.chip.size
     }
 }

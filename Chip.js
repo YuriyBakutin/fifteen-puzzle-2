@@ -8,9 +8,9 @@ export class Chip {
     constructor(argsObject) {
         let {chipIndex, fieldIndex, xPlaceIndex, yPlaceIndex} = argsObject
         this.chipIndex = chipIndex
-        this.fieldIndex = fieldIndex || this.getFieldIndex(xPlaceIndex, yPlaceIndex)
-        xPlaceIndex = xPlaceIndex || this.getXPlaceIndex(fieldIndex)
-        yPlaceIndex = yPlaceIndex || this.getYPlaceIndex(fieldIndex)
+        this.fieldIndex = fieldIndex || Chip.getFieldIndex(xPlaceIndex, yPlaceIndex)
+        xPlaceIndex = xPlaceIndex || Chip.getXPlaceIndex(fieldIndex)
+        yPlaceIndex = yPlaceIndex || Chip.getYPlaceIndex(fieldIndex)
 
         let chipElementsObj = {}
 
@@ -46,15 +46,15 @@ export class Chip {
     }
 
     // xPlaceIndex and yPlaceIndex starts from zero
-    getFieldIndex(xPlaceIndex, yPlaceIndex) {
+    static getFieldIndex(xPlaceIndex, yPlaceIndex) {
         return xPlaceIndex + 1 + yPlaceIndex * game.numberOfColumns
     }
 
-    getXPlaceIndex(fieldIndex) {
+    static getXPlaceIndex(fieldIndex) {
         return (fieldIndex - 1) % game.numberOfColumns
     }
 
-    getYPlaceIndex(fieldIndex) {
+    static getYPlaceIndex(fieldIndex) {
         return Math.floor((fieldIndex - 1) / game.numberOfColumns)
     }
 }
