@@ -64,55 +64,14 @@ export const game = {
 
         randomNumbers.sort((a, b) => a.weight - b.weight)
 
-        // holeStringNumber is used for manipulations
-        // on achievement of possibility of a solution
-        let holeStringNumber
-
         for( let fieldIndex = 1; fieldIndex <= game.numberOfFields; fieldIndex++ ) {
             game.chipIndexes[fieldIndex] = randomNumbers[fieldIndex].number
-
-            if ( game.chipIndexes[fieldIndex] == game.holeIndex ) {
-                holeStringNumber = Math.floor((fieldIndex - 1) / game.numberOfRows) + 1
-            }
         }
 
         // Checking for a possibility of a solution
-        let displacedPairsCounter = 0;
-        for ( let fieldIndex = 1; fieldIndex < game.numberOfFields; fieldIndex++ ) {
-            for(
-                let fieldIndex2 = fieldIndex + 1;
-                fieldIndex2 <= game.numberOfFields;
-                fieldIndex2++
-            ) {
-                if(
-                    game.chipIndexes[fieldIndex] > game.chipIndexes[fieldIndex2]
-                    && game.chipIndexes[fieldIndex] != game.holeIndex
-                ) {
-                    displacedPairsCounter++;
-                }
-            }
-        }
-
-        let invariant = displacedPairsCounter + holeStringNumber
-
-        // let solutionIsPossible = Boolean((invariant + 1) % 2)
         let solutionIsPossible = game.checkForSolvable()
 
-        // Checking for a possibility of a solution
         if ( !solutionIsPossible ) {
-            if(holeStringNumber != 1) {
-                let n = game.chipIndexes[1];
-                game.chipIndexes[1] = game.chipIndexes[2];
-                game.chipIndexes[2] = n;
-            } else {
-                let n = game.chipIndexes[game.numberOfFields];
-                game.chipIndexes[game.numberOfFields] =
-                    game.chipIndexes[game.numberOfFields - 1];
-                game.chipIndexes[game.numberOfFields - 1] = n;
-            }
-        }
-
-        if ( game.endGameCheck() ) {
             game.randomReplace()
         }
     },
@@ -139,10 +98,11 @@ export const game = {
             (chipIndex) => chipIndex == game.holeIndex
         )
 
-        let holeStringNumber = Chip.getYPlaceIndex(holeFieldIndex)
-        let invariantByEven = displacedPairsCounter + holeStringNumber * (
-            +game.numberOfColumns + 1
-        ) // If even, game has a solution
+        let holeStringNumber = Chip.getYPlaceIndex(holeFieldIndex) + 1
+
+        // If even, game has a solution
+        let invariantByEven = displacedPairsCounter
+            + (+game.numberOfColumns + 1) * (+game.numberOfRows + holeStringNumber)
 
         return !Boolean((invariantByEven) % 2)
     },
