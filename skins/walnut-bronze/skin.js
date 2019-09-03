@@ -1,5 +1,5 @@
 export const skin = {
-    backgroundColor: 'saddlebrown',
+    backgroundColor: 'rgb(31, 26, 22)',
     gameField: {
         width: 'view.skin.chip.size * game.numberOfColumns',
         height: 'view.skin.chip.size * game.numberOfRows',
