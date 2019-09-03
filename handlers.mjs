@@ -10,6 +10,8 @@ onload = async () => {
 
     document.addEventListener('gameOver', onGameOver)
 
+    // document.body.addEventListener('touchstart', ontouchstart)
+
     restart()
 }
 
@@ -33,7 +35,7 @@ const getChipId = (element) => {
 let chipPickedIndex
 let mouseDownPoint = {}
 
-onmousedown = (event) => {
+const ontouchstart = (event) => {
     const chipId = getChipId(event.target)
     if ( !chipId ) {
         return
@@ -50,6 +52,10 @@ onmousedown = (event) => {
         )
         return
     }
+}
+
+onmousedown = (event) => {
+    ontouchstart(event)
 }
 
 onmousemove = (event) => {
