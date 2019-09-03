@@ -1,6 +1,6 @@
-import { game } from './game.js' // here, game is applied by eval('…game.prop…')
-import { GameBoard } from './GameBoard.js'
-import { Chip } from './Chip.js'
+import { game } from './game.mjs' // here, game is applied by eval('…game.prop…')
+import { GameBoard } from './GameBoard.mjs'
+import { Chip } from './Chip.mjs'
 
 'use strict'
 
@@ -76,7 +76,7 @@ export const view = {
             + view.skinsRef[ view.currentSkinIndex ].orientation[ view.orientation ].url
             + '/'
 
-        let { skin } = await import(view.skinUrl + 'skin.js')
+        let { skin } = await import(view.skinUrl + 'skin.mjs')
 
         view.skin = skin
     },

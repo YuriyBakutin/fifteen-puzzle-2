@@ -1,11 +1,11 @@
-import { view } from './view.js'
-import { game } from './game.js'
+import { view } from './view.mjs'
+import { game } from './game.mjs'
 
 'use strict'
 
 onload = async () => {
 
-    let { skins } = await import('./skins/skins.js')
+    let { skins } = await import('./skins/skins.mjs')
     view.skinsRef = skins
 
     document.addEventListener('gameOver', onGameOver)
