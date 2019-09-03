@@ -1,3 +1,7 @@
+// This is the simple server for testing projects
+// with native js modules on a local machine when you can't
+// just open a page in a browser
+
 const http = require('http')
 const fs = require('fs')
 const mimeTypes = {
