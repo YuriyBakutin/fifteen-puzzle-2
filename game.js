@@ -134,8 +134,6 @@ export const game = {
                     yCurrentPlaceIndex
                 )
 
-                let currentMovingChipIndex = game.chipIndexes[currentFieldIndex]
-
                 let yNextPlaceIndex = yCurrentPlaceIndex + game.step.y
 
                 let nextFieldIndex = Chip.getFieldIndex(
@@ -156,6 +154,7 @@ export const game = {
             } while ( yCurrentPlaceIndex != yPlacePickedChipIndex )
             game.chipIndexes[pickedFieldIndex] = game.holeIndex
             game.endGameCheck()
+            return true
         }
 
         if ( yPlacePickedChipIndex == yPlaceHoleIndex ) {
@@ -170,7 +169,6 @@ export const game = {
                     xCurrentPlaceIndex,
                     yPlacePickedChipIndex
                 )
-                let currentMovingChipIndex = game.chipIndexes[currentFieldIndex]
 
                 let xNextPlaceIndex = xCurrentPlaceIndex + game.step.x
 
@@ -192,7 +190,9 @@ export const game = {
             } while ( xCurrentPlaceIndex != xPlacePickedChipIndex )
             game.chipIndexes[pickedFieldIndex] = game.holeIndex
             game.endGameCheck()
+            return true
         }
+        return false
     },
 
     endGameCheck() {
