@@ -14,7 +14,6 @@ const mimeTypes = {
   'ico': 'image/x-icon'
 }
 const PORT = 3001
-const users = []
 
 const requestHandler = (request, response) => {
     console.log('request.url: ', request.url)
@@ -23,41 +22,30 @@ const requestHandler = (request, response) => {
     let headContent = {}
     let indexOfLastSlashInPathToFile = pathToFile.lastIndexOf('/')
     let indexOfLastDotInPathToFile = pathToFile.indexOf('.', indexOfLastSlashInPathToFile)
-    if ( indexOfLastDotInPathToFile == -1 ) { // Видимо, это папка
-        if ( indexOfLastSlashInPathToFile < pathToFile.length ) { // Не заканчивается слэшем
+
+    if ( indexOfLastDotInPathToFile == -1 ) { // Apparently it's a folder
+        if ( indexOfLastSlashInPathToFile < pathToFile.length ) { // No ending slash
             pathToFile += '/'
         }
-        pathToFile += 'index.html' // Будем искать в ней index.html
+
+        pathToFile += 'index.html' // Looking for a index.html in it
         headContent[ 'Content-Type' ] = 'text/html'
     } else {
         let fileExtension = pathToFile.slice(indexOfLastDotInPathToFile + 1)
+
         if ( mimeTypes[fileExtension] ) {
             headContent[ 'Content-Type' ] = mimeTypes[fileExtension]
         }
     }
 
-    let cookie = request.headers.cookie
-    console.log('cookie: ', cookie)
-
-    let userId
-
-    console.log('headContent: ', headContent)
-    if ( !cookie || cookie.indexOf('cookieid=test') != -1 ) {
-        userId = users.length
-        headContent[ 'Set-Cookie' ] = 'cookieId=' + userId
-        users[ userId ] = {}
-    } else {
-        console.log( 'indexOf cookieid=test: ', cookie.indexOf('cookieid=test') )
-    }
-
     let webContent
     let responseCode = 200
+
     try {
         webContent = fs.readFileSync(pathToFile)
         response.writeHead(responseCode, headContent)
         response.write(webContent)
     } catch (err) {
-        // console.log('err: ', err)
         responseCode = 404
         console.error(err)
         response.writeHead(responseCode)
@@ -68,5 +56,4 @@ const requestHandler = (request, response) => {
 
 const server = http.createServer(requestHandler)
 server.listen(PORT)
-
 console.log(`Server has started at http://localhost:${PORT}/`)
