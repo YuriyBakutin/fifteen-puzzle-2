@@ -9,6 +9,7 @@ const mimeTypes = {
   'svg': 'image/svg+xml',
   'css': 'text/css',
   'js': 'application/javascript',
+  'mjs': 'application/javascript',
   'json': 'application/json',
   'txt': 'text/plain',
   'gif': 'image/gif',
