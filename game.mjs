@@ -1,5 +1,5 @@
-import { view } from './view.js'
-import { Chip } from './Chip.js'
+import { view } from './view.mjs'
+import { Chip } from './Chip.mjs'
 
 'use strict'
 

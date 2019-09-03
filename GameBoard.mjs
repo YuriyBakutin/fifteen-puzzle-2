@@ -1,5 +1,5 @@
-import { view } from './view.js'
-import { game } from './game.js'
+import { view } from './view.mjs'
+import { game } from './game.mjs'
 
 'use strict'
 
