@@ -85,6 +85,8 @@ const toPascal = (nameInCamel) => {
     return firstChar.toUpperCase() + nameInCamel.slice(1)
 }
 
+    let hasNextPosition = false
+
 const mouseEventHandlers = {
     onClickAddRow() {
         if ( view.addRowElement.disabled ) {
@@ -147,16 +149,27 @@ const mouseEventHandlers = {
 
         chipPickedIndex = chipIndex
 
-        game.setNextPosition(chipIndex)
-        view.defineMovingElements(chipPickedIndex)
+        hasNextPosition = game.setNextPosition(chipIndex)
+
+        if ( hasNextPosition ) {
+            view.defineMovingElements(chipPickedIndex)
+        }
     },
 
     onMouseUp() {
+        if ( !hasNextPosition ) {
+            return
+        }
+
         chipPickedIndex = null
         view.moveChipByGame()
     },
 
     onMouseMove(mouseMoveShift) {
+        if ( !hasNextPosition ) {
+            return
+        }
+
         view.moveChipByUser(mouseMoveShift)
     }
 }
