@@ -13,7 +13,17 @@ onload = async () => {
     restart()
 }
 
+let gamePaused = false
+let gameOver = true
+
+const onGameOver = () => {
+    console.log('Game over!')
+    gameOver = true
+}
+
 const restart = async () => {
+    gamePaused = false
+    gameOver = false
     game.randomReplace()
     await view.repaint()
 }
@@ -142,8 +152,12 @@ const mouseEventHandlers = {
         restart()
     },
 
+    onClickStartAndPause() {
+        // restart()
+    },
+
     onMouseDownChip(chipIndex) {
-        if ( Number.isNaN(+chipIndex) ) {
+        if ( Number.isNaN(+chipIndex) || gamePaused == true || gameOver == true ) {
             return
         }
 
@@ -181,8 +195,3 @@ onresize = async () => {
         await view.repaint()
     }, view.twitchWhenResizeEliminationTiming)
 }
-
-const onGameOver = () => {
-    console.log('Game over!')
-}
-
