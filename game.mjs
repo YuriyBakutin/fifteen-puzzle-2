@@ -17,7 +17,7 @@ export const game = {
     gameOverEvent: new Event('gameOver'),
     step: {},
 
-    _recalcNumberOfFields() {
+    recalculateNumberOfFields() {
         game._numberOfFields = game.numberOfColumns * game.numberOfRows
     },
 
@@ -28,7 +28,7 @@ export const game = {
     set numberOfColumns(i) {
         localStorage['numberOfColumns'] = i
         game.chipIndexes = []
-        game._recalcNumberOfFields()
+        game.recalculateNumberOfFields()
     },
 
     get numberOfRows() {
@@ -38,12 +38,12 @@ export const game = {
     set numberOfRows(i) {
         localStorage['numberOfRows'] = i
         game.chipIndexes = []
-        game._recalcNumberOfFields()
+        game.recalculateNumberOfFields()
     },
 
     get numberOfFields() {
         if ( !game._numberOfFields ) {
-            game._recalcNumberOfFields()
+            game.recalculateNumberOfFields()
         }
 
         return game._numberOfFields
