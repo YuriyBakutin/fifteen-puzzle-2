@@ -51,7 +51,7 @@ const onPickStart = (event) => {
 
     const chipId = getChipId(event.target)
 
-    if ( !chipId || /^chip\d./.test(chipId) ) { // chipId.slice(0,'chip'.length) != 'chip' ) {
+    if ( !chipId || !chipId.startsWith('chip') ) {
         return
     }
 
@@ -64,7 +64,6 @@ const onPickStart = (event) => {
 }
 
 const ontouchstart = (event) => {
-    event.preventDefault()
     let firstTouchPointEvent = event.changedTouches[0]
     onPickStart(firstTouchPointEvent)
 }
@@ -88,7 +87,6 @@ const onPickMove = (event) => {
 }
 
 const ontouchmove = (event) => {
-    event.preventDefault()
     let firstTouchPointEvent = event.changedTouches[0]
     onPickMove(firstTouchPointEvent)
 }
@@ -99,7 +97,6 @@ onmousemove = (event) => {
 }
 
 const ontouchend = (event) => {
-    event.preventDefault()
     userEventHandlers.onPickChipEnd()
 }
 
