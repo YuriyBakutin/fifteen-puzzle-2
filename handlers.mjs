@@ -183,7 +183,7 @@ const userEventHandlers = {
     },
 
     onPickChipStart(chipIndex) {
-        if ( Number.isNaN(+chipIndex) ) {
+        if ( Number.isNaN(+chipIndex) || gamePaused == true || gameOver == true ) {
             return
         }
 
