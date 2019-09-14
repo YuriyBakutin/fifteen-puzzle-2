@@ -10,6 +10,10 @@ onload = async () => {
 
     document.addEventListener('gameOver', onGameOver)
 
+    document.body.addEventListener('touchstart', ontouchstart)
+    document.body.addEventListener('touchmove', ontouchmove)
+    document.body.addEventListener('touchend', ontouchend)
+
     restart()
 }
 
@@ -43,26 +47,33 @@ const getChipId = (element) => {
 let chipPickedIndex
 let mouseDownPoint = {}
 
-onmousedown = (event) => {
+const onPickStart = (event) => {
+
     const chipId = getChipId(event.target)
-    if ( !chipId ) {
+
+    if ( !chipId || !chipId.startsWith('chip') ) {
         return
     }
 
-    mouseDownPoint.x = event.clientX
-    mouseDownPoint.y = event.clientY
+    mouseDownPoint.x = +event.clientX
+    mouseDownPoint.y = +event.clientY
 
-    const mouseDownEventName = 'onMouseDown' + toPascalCase(chipId)
-
-    if ( mouseDownEventName.slice(0,'onMouseDownChip'.length) == 'onMouseDownChip' ) {
-        mouseEventHandlers.onMouseDownChip(
-            mouseDownEventName.slice('onMouseDownChip'.length)
-        )
-        return
-    }
+    userEventHandlers.onPickChipStart(
+        chipId.slice('chip'.length)
+    )
 }
 
-onmousemove = (event) => {
+const ontouchstart = (event) => {
+    let firstTouchPointEvent = event.changedTouches[0]
+    onPickStart(firstTouchPointEvent)
+}
+
+onmousedown = (event) => {
+    event.preventDefault()
+    onPickStart(event)
+}
+
+const onPickMove = (event) => {
     if ( !chipPickedIndex ) {
         return
     }
@@ -72,18 +83,33 @@ onmousemove = (event) => {
         y: event.clientY - mouseDownPoint.y
     }
 
-    mouseEventHandlers.onMouseMove(mouseMoveShift)
+    userEventHandlers.onPickChipMove(mouseMoveShift)
 }
 
-onmouseup = () => {
-    mouseEventHandlers.onMouseUp()
+const ontouchmove = (event) => {
+    let firstTouchPointEvent = event.changedTouches[0]
+    onPickMove(firstTouchPointEvent)
+}
+
+onmousemove = (event) => {
+    event.preventDefault()
+    onPickMove(event)
+}
+
+const ontouchend = (event) => {
+    userEventHandlers.onPickChipEnd()
+}
+
+onmouseup = (event) => {
+    event.preventDefault()
+    userEventHandlers.onPickChipEnd()
 }
 
 onclick = (event) => {
     const clickEventName = 'onClick' + toPascalCase(event.target.id)
 
-    if ( mouseEventHandlers[clickEventName] ) {
-        mouseEventHandlers[clickEventName]()
+    if ( userEventHandlers[clickEventName] ) {
+        userEventHandlers[clickEventName]()
     }
 }
 
@@ -97,7 +123,7 @@ const toPascalCase = (nameInCamelCase) => {
 
 let hasNextPosition = false
 
-const mouseEventHandlers = {
+const userEventHandlers = {
     onClickAddRow() {
         if ( view.addRowElement.disabled ) {
             return
@@ -156,8 +182,8 @@ const mouseEventHandlers = {
         // restart()
     },
 
-    onMouseDownChip(chipIndex) {
-        if ( Number.isNaN(+chipIndex) || gamePaused == true || gameOver == true ) {
+    onPickChipStart(chipIndex) {
+        if ( Number.isNaN(+chipIndex) ) {
             return
         }
 
@@ -170,7 +196,7 @@ const mouseEventHandlers = {
         }
     },
 
-    onMouseUp() {
+    onPickChipEnd() {
         if ( !hasNextPosition ) {
             return
         }
@@ -179,7 +205,7 @@ const mouseEventHandlers = {
         view.moveChipByGame()
     },
 
-    onMouseMove(mouseMoveShift) {
+    onPickChipMove(mouseMoveShift) {
         if ( !hasNextPosition ) {
             return
         }
