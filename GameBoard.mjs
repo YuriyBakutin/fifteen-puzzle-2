@@ -21,6 +21,7 @@ export class GameBoard {
         view.backsideElement = view.renderElement({
             skinElement: view.skin.gameField,
             tagName: 'div',
+            zIndex: view.BACKSIDE_Z_INDEX
         })
 
         for (
@@ -193,6 +194,12 @@ export class GameBoard {
 
         view.nextSkinElement = view.renderElement({
             skinElement: view.skin.frame.buttons.nextSkinImage
+        })
+
+        view.gameFieldShadowElement = view.renderElement({
+            skinElement: view.skin.gameField,
+            tagName: 'div',
+            zIndex: view.SHADOW_Z_INDEX
         })
 
         view.gameFieldElement = view.renderElement({

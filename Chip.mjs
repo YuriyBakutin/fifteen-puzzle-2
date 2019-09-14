@@ -17,7 +17,7 @@ export class Chip {
         chipElementsObj.shadow = view.renderElement({
             skinElement: view.skin.chip.shadow,
             placeIndexes: { xPlaceIndex, yPlaceIndex },
-            parentElement: view.gameFieldElement,
+            parentElement: view.gameFieldShadowElement,
             id: 'chipShadow' + chipIndex,
             zIndex: view.SHADOW_Z_INDEX
         })
