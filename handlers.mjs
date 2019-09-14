@@ -52,7 +52,7 @@ onmousedown = (event) => {
     mouseDownPoint.x = event.clientX
     mouseDownPoint.y = event.clientY
 
-    const mouseDownEventName = 'onMouseDown' + toPascal(chipId)
+    const mouseDownEventName = 'onMouseDown' + toPascalCase(chipId)
 
     if ( mouseDownEventName.slice(0,'onMouseDownChip'.length) == 'onMouseDownChip' ) {
         mouseEventHandlers.onMouseDownChip(
@@ -80,22 +80,22 @@ onmouseup = () => {
 }
 
 onclick = (event) => {
-    const clickEventName = 'onClick' + toPascal(event.target.id)
+    const clickEventName = 'onClick' + toPascalCase(event.target.id)
 
     if ( mouseEventHandlers[clickEventName] ) {
         mouseEventHandlers[clickEventName]()
     }
 }
 
-const toPascal = (nameInCamel) => {
-    if ( !nameInCamel ) {
+const toPascalCase = (nameInCamelCase) => {
+    if ( !nameInCamelCase ) {
         return ''
     }
-    const firstChar = nameInCamel[0]
-    return firstChar.toUpperCase() + nameInCamel.slice(1)
+    const firstChar = nameInCamelCase[0]
+    return firstChar.toUpperCase() + nameInCamelCase.slice(1)
 }
 
-    let hasNextPosition = false
+let hasNextPosition = false
 
 const mouseEventHandlers = {
     onClickAddRow() {
