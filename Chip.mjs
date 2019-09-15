@@ -27,19 +27,22 @@ export class Chip {
             placeIndexes: { xPlaceIndex, yPlaceIndex },
             parentElement: view.gameFieldElement,
             tagName: 'div',
+            zIndex: view.CHIP_POOL_Z_INDEX,
             id: 'chip' + chipIndex
         })
 
         chipElementsObj.chip = view.renderElement({
             skinElement: view.skin.chip.chip,
             parentElement: chipElementsObj.frame,
-            zIndex: view.CHIP_POOL_Z_INDEX
+            zIndex: view.CHIP_POOL_Z_INDEX,
+            pointer: true
         })
 
         chipElementsObj.label = view.renderElement({
             skinElement: view.skin.chip.label,
             parentElement: chipElementsObj.frame,
-            text: chipIndex
+            text: chipIndex,
+            pointer: true
         })
 
         return chipElementsObj

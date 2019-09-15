@@ -127,6 +127,7 @@ export const view = {
             top,
             left,
             disabled,
+            pointer,
             classCSS
         } = argsObject
 
@@ -203,6 +204,12 @@ export const view = {
             parentElement.appendChild(elem)
         } else {
             this.gameBoardElement.appendChild(elem)
+        }
+
+        if ( disabled ) {
+            elem.disabled = disabled
+        } else if ( pointer ) {
+            elem.classList.add('pointer_')
         }
 
         return elem

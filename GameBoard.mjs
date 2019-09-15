@@ -6,8 +6,6 @@ import { game } from './game.mjs'
 export class GameBoard {
 
     constructor() {
-        let disabled
-
         document.body.setAttribute('style', `
             background: ${view.skin.backgroundColor}
             `)
@@ -125,49 +123,47 @@ export class GameBoard {
 
         view.startAndPauseElement = view.renderElement({
             skinElement: view.skin.frame.buttons.startAndPause,
-            id: 'startAndPause'
+            id: 'startAndPause',
+            pointer: true
         })
 
         view.renderElement({
             skinElement: view.skin.frame.buttons.restart,
-            id: 'restart'
+            id: 'restart',
+            pointer: true
         })
 
-        disabled = game.numberOfRows == game.MIN_NUMBER_OF_ROWS
         view.removeRowElement = view.renderElement({
             skinElement: view.skin.frame.buttons.removeRow,
-            disabled,
-            id: 'removeRow'
+            disabled: game.numberOfRows == game.MIN_NUMBER_OF_ROWS,
+            id: 'removeRow',
+            pointer: true
         })
-        view.removeRowElement.disabled = disabled
 
         view.renderElement({
             skinElement: view.skin.frame.buttons.addRemoveRowImage
         })
 
-        disabled = game.numberOfRows == game.MAX_NUMBER_OF_ROWS
         view.addRowElement = view.renderElement({
             skinElement: view.skin.frame.buttons.addRow,
-            disabled,
-            id: 'addRow'
+            disabled: game.numberOfRows == game.MAX_NUMBER_OF_ROWS,
+            id: 'addRow',
+            pointer: true
         })
-        view.addRowElement.disabled = disabled
 
-        disabled = game.numberOfColumns == game.MIN_NUMBER_OF_COLUMNS
         view.removeColumnElement = view.renderElement({
             skinElement: view.skin.frame.buttons.removeColumn,
-            disabled,
-            id: 'removeColumn'
+            disabled: game.numberOfColumns == game.MIN_NUMBER_OF_COLUMNS,
+            id: 'removeColumn',
+            pointer: true
         })
-        view.removeColumnElement.disabled = disabled
 
-        disabled = game.numberOfColumns == game.MAX_NUMBER_OF_COLUMNS
         view.addColumnElement = view.renderElement({
             skinElement: view.skin.frame.buttons.addColumn,
-            disabled,
-            id: 'addColumn'
+            disabled: game.numberOfColumns == game.MAX_NUMBER_OF_COLUMNS,
+            id: 'addColumn',
+            pointer: true
         })
-        view.addColumnElement.disabled = disabled
 
         view.renderElement({
             skinElement: view.skin.frame.buttons.removeColumnImage
@@ -177,22 +173,23 @@ export class GameBoard {
             skinElement: view.skin.frame.buttons.addColumnImage
         })
 
-        view.addColumnElement.disabled = disabled
-        view.previousSkinElement = view.renderElement({
+        view.renderElement({
             skinElement: view.skin.frame.buttons.previousSkin,
-            id: 'previousSkin'
+            id: 'previousSkin',
+            pointer: true
         })
 
         view.renderElement({
             skinElement: view.skin.frame.buttons.nextSkin,
-            id: 'nextSkin'
+            id: 'nextSkin',
+            pointer: true
         })
 
         view.renderElement({
             skinElement: view.skin.frame.buttons.previousSkinImage
         })
 
-        view.nextSkinElement = view.renderElement({
+        view.renderElement({
             skinElement: view.skin.frame.buttons.nextSkinImage
         })
 
