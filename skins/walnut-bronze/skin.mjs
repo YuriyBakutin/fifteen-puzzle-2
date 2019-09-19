@@ -232,7 +232,7 @@ export const skin = {
                     </style>
                 </defs>
                 <text
-                    style="font-family:'Lobster';text-align:center;font-size:60px;text-anchor:middle;fill:#000000;fill-opacity:0.82773108""
+                    style="font-family:'Lobster';text-align:center;font-size:60px;text-anchor:middle;fill:#000000;fill-opacity:0.82773108"
                     x="47.5"
                     y="70">??text??</text>
             </svg>` + '\n'
@@ -247,39 +247,49 @@ export const skin = {
         }
     },
     indicators: {
-        width: 256,
-        height: 100,
+        width: 120,
+        height: 70,
+        picture: {
+            url: 'indicator.svg',
+        },
         label: {
-            left: 'view.skin.frame.indicators.width / 2',
-            top: '( view.skin.frame.indicators.height - view.skin.frame.indicators.font.fontSize ) / 2'
-        },
-        font: {
-            fontUrl: 'fonts/source-code-pro-bold.woff2',
-            fontFamily: 'Source Code Pro',
-            fontSize: 70,
-            opacity: 1
-        },
-        stepCounter: {
-            url: 'step-counter.png',
-            width: 'view.skin.frame.width',
-            height: 'view.skin.frame.height',
-            left: 154,
-            top: 6,
-            label: {
-                left: 'view.skin.frame.indicators.width / 2',
-                bottom: '( view.skin.frame.indicators.height + view.skin.frame.indicators.font.fontSize ) / 2'
-            }
+            // Notation ??...?? for replace by actual data
+            // See view.renderElement()
+            svg: `
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="??width??"
+                height="??height??"
+                viewBox="0 0 31.749999 18.520834">
+                <defs>
+                    <style type="text/css">
+                        <![CDATA[
+                            @font-face {
+                                font-family: 'DejaVu Sans Condensed Bold';
+                                src: url('??skinUrl??fonts/dejavu-sans-condensed-bold-webfont.woff2');
+                            }
+                        ]]>
+                    </style>
+                </defs>
+                <text
+                    y="11.828742"
+                    x="15.880168"
+                    style="font-weight:bold;font-size:7.05555534px;font-family:'DejaVu Sans Condensed Bold';text-align:center;text-anchor:middle;fill:#000000;fill-opacity:0.82773108"
+                    xml:space="preserve">??text??</text>
+            </svg>` + '\n'
         },
         timeCounter: {
-            url: 'time-counter.png',
-            width: 'view.skin.frame.width',
-            height: 'view.skin.frame.height',
-            right: 'view.skin.frame.indicators.stepCounter.left',
-            top: 'view.skin.frame.indicators.stepCounter.top',
-            label: {
-                left: 'view.skin.frame.indicators.width / 2',
-                bottom: '( view.skin.frame.indicators.height + view.skin.frame.indicators.font.fontSize ) / 2'
-            }
+            width: 'view.skin.indicators.width',
+            height: 'view.skin.indicators.height',
+            left: 90,
+            top: -5
+        },
+        stepCounter: {
+            width: 'view.skin.indicators.width',
+            height: 'view.skin.indicators.height',
+            right: 'view.skin.indicators.timeCounter.left',
+            top: 'view.skin.indicators.timeCounter.top'
         }
     }
+
 }

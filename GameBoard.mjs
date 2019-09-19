@@ -1,5 +1,6 @@
 import { view } from './view.mjs'
 import { game } from './game.mjs'
+import { Indicator } from './Indicator.mjs'
 
 'use strict'
 
@@ -193,6 +194,16 @@ export class GameBoard {
             skinElement: view.skin.frame.buttons.nextSkinImage
         })
 
+        view.stepCounter = new Indicator({
+            skinElement: view.skin.indicators.stepCounter,
+            text: '00000'
+        })
+
+        view.timeCounter = new Indicator({
+            skinElement: view.skin.indicators.timeCounter,
+            text: '00:00'
+        })
+
         view.gameFieldShadowElement = view.renderElement({
             skinElement: view.skin.gameField,
             tagName: 'div',
@@ -201,7 +212,7 @@ export class GameBoard {
 
         view.gameFieldElement = view.renderElement({
             skinElement: view.skin.gameField,
-            tagName: 'div',
+            tagName: 'div'
         })
     }
 }

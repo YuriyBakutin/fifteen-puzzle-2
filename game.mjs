@@ -6,8 +6,8 @@ import { Chip } from './Chip.mjs'
 export const game = {
     MAX_NUMBER_OF_COLUMNS: 10,
     MAX_NUMBER_OF_ROWS: 10,
-    MIN_NUMBER_OF_COLUMNS: 2,
-    MIN_NUMBER_OF_ROWS: 2,
+    MIN_NUMBER_OF_COLUMNS: 3,
+    MIN_NUMBER_OF_ROWS: 3,
     DEFAULT_NUMBER_OF_COLUMNS: 4,
     DEFAULT_NUMBER_OF_ROWS: 4,
     // For example:
@@ -15,7 +15,12 @@ export const game = {
     _numberOfFields: null,
     movingChipsParams: [],
     gameOverEvent: new Event('gameOver'),
-    step: {},
+    stepDirectionVector: {
+        x: null,
+        y: null
+    },
+    stepCounter: 0,
+    timeCounter: 0,
 
     recalculateNumberOfFields() {
         game._numberOfFields = game.numberOfColumns * game.numberOfRows
@@ -124,8 +129,8 @@ export const game = {
         if ( xPlacePickedChipIndex == xPlaceHoleIndex ) {
             game.movingChipsParams = []
             let yDistance = yPlacePickedChipIndex - yPlaceHoleIndex
-            game.step.x = null
-            game.step.y = Math.sign(yDistance)
+            game.stepDirectionVector.x = null
+            game.stepDirectionVector.y = Math.sign(yDistance)
             let yCurrentPlaceIndex = yPlaceHoleIndex
 
             do {
@@ -134,7 +139,7 @@ export const game = {
                     yCurrentPlaceIndex
                 )
 
-                let yNextPlaceIndex = yCurrentPlaceIndex + game.step.y
+                let yNextPlaceIndex = yCurrentPlaceIndex + game.stepDirectionVector.y
 
                 let nextFieldIndex = Chip.getFieldIndex(
                     xPlacePickedChipIndex,
@@ -160,8 +165,8 @@ export const game = {
         if ( yPlacePickedChipIndex == yPlaceHoleIndex ) {
             game.movingChipsParams = []
             let xDistance = xPlacePickedChipIndex - xPlaceHoleIndex
-            game.step.y = null
-            game.step.x = Math.sign(xDistance)
+            game.stepDirectionVector.y = null
+            game.stepDirectionVector.x = Math.sign(xDistance)
             let xCurrentPlaceIndex = xPlaceHoleIndex
 
             do {
@@ -170,7 +175,7 @@ export const game = {
                     yPlacePickedChipIndex
                 )
 
-                let xNextPlaceIndex = xCurrentPlaceIndex + game.step.x
+                let xNextPlaceIndex = xCurrentPlaceIndex + game.stepDirectionVector.x
 
                 let nextFieldIndex = Chip.getFieldIndex(
                     xNextPlaceIndex,
