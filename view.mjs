@@ -131,11 +131,17 @@ export const view = {
             classCSS
         } = argsObject
 
+        let svg
+        if ( skinElement.svgRef ) {
+            svg = eval(skinElement.svgRef)
+        } else {
+            svg = skinElement.svg
+        }
         // default values:
         cssPropPosition = cssPropPosition || 'absolute'
         zIndex = zIndex || view.GAMEBOARD_Z_INDEX
 
-        tagName = skinElement.svg ? 'div' : (tagName || 'img')
+        tagName = svg ? 'div' : (tagName || 'img')
 
         const elem = document.createElement(tagName)
 
@@ -165,8 +171,8 @@ export const view = {
             z-index: ${zIndex};` + '\n'
         )
 
-        if ( skinElement.svg ) {
-            let svgStringArray = skinElement.svg.split('??')
+        if ( svg ) {
+            let svgStringArray = svg.split('??')
             let svgResolvedStringArray = svgStringArray.map(
                 (svgString) => {
                     let svgResolvedString
@@ -415,10 +421,10 @@ export const view = {
 
     moveChipByUser(mouseMoveShift) { // Drag and drop
         let lastPathLength
-        if ( game.step.x ) {
+        if ( game.stepDirectionVector.x ) {
             const MIN = 0
             const MAX = 1
-            let range = [ 0, -game.step.x * view.skin.chip.size ]
+            let range = [ 0, -game.stepDirectionVector.x * view.skin.chip.size ]
             range.sort((a, b) => a - b)
             if ( range[MIN] > mouseMoveShift.x ) {
                 mouseMoveShift.x = range[MIN]
@@ -449,10 +455,10 @@ export const view = {
             }
         }
 
-        if ( game.step.y ) {
+        if ( game.stepDirectionVector.y ) {
             const MIN = 0
             const MAX = 1
-            let range = [ 0, -game.step.y * view.skin.chip.size ]
+            let range = [ 0, -game.stepDirectionVector.y * view.skin.chip.size ]
             range.sort((a, b) => a - b)
             if ( range[MIN] > mouseMoveShift.y ) {
                 mouseMoveShift.y = range[MIN]
@@ -484,5 +490,18 @@ export const view = {
         }
 
         view.remainingPathRatio = (view.skin.chip.size - lastPathLength) / view.skin.chip.size
+    },
+
+    updateStepCounter() {
+        view.stepCounter.textUpdate(view.toFiveDigits(game.stepCounter))
+    },
+
+    toFiveDigits(value) {
+        let valueString = value.toString()
+        let fiveDigitArray = []
+        for ( let j = 4, i = valueString.length - 1; j >= 0; j--, i-- ) {
+            fiveDigitArray[j] = i < 0 ? '0' : valueString[i]
+        }
+        return fiveDigitArray.join('')
     }
 }

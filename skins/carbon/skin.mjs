@@ -247,39 +247,27 @@ export const skin = {
         }
     },
     indicators: {
-        width: 256,
-        height: 100,
-        label: {
-            left: 'view.skin.frame.indicators.width / 2',
-            top: '( view.skin.frame.indicators.height - view.skin.frame.indicators.font.fontSize ) / 2'
+        width: 100,
+        height: 50,
+        picture: {
+            width: 256,
+            height: 100,
+            url: 'indicator.svg',
         },
-        font: {
-            fontUrl: 'fonts/source-code-pro-bold.woff2',
-            fontFamily: 'Source Code Pro',
-            fontSize: 70,
-            opacity: 1
+        label: {
+
         },
         stepCounter: {
-            url: 'step-counter.png',
-            width: 'view.skin.frame.width',
-            height: 'view.skin.frame.height',
-            left: 154,
-            top: 6,
-            label: {
-                left: 'view.skin.frame.indicators.width / 2',
-                bottom: '( view.skin.frame.indicators.height + view.skin.frame.indicators.font.fontSize ) / 2'
-            }
+            width: 'view.skin.indicators.width',
+            height: 'view.skin.indicators.height',
+            left: 100,
+            top: 0
         },
         timeCounter: {
-            url: 'time-counter.png',
-            width: 'view.skin.frame.width',
-            height: 'view.skin.frame.height',
-            right: 'view.skin.frame.indicators.stepCounter.left',
-            top: 'view.skin.frame.indicators.stepCounter.top',
-            label: {
-                left: 'view.skin.frame.indicators.width / 2',
-                bottom: '( view.skin.frame.indicators.height + view.skin.frame.indicators.font.fontSize ) / 2'
-            }
+            width: 'view.skin.indicators.width',
+            height: 'view.skin.indicators.height',
+            right: 'view.skin.indicators.stepCounter.left',
+            top: 'view.skin.indicators.stepCounter.top'
         }
     }
 }

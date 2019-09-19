@@ -28,6 +28,7 @@ const onGameOver = () => {
 const restart = async () => {
     gamePaused = false
     gameOver = false
+    game.stepCounter = 0
     game.randomReplace()
     await view.repaint()
 }
@@ -47,6 +48,16 @@ const getChipId = (element) => {
 let chipPickedIndex
 let mouseDownPoint = {}
 
+const ontouchstart = (event) => {
+    let firstTouchPointEvent = event.changedTouches[0]
+    onPickStart(firstTouchPointEvent)
+}
+
+onmousedown = (event) => {
+    event.preventDefault()
+    onPickStart(event)
+}
+
 const onPickStart = (event) => {
 
     const chipId = getChipId(event.target)
@@ -63,14 +74,14 @@ const onPickStart = (event) => {
     )
 }
 
-const ontouchstart = (event) => {
+const ontouchmove = (event) => {
     let firstTouchPointEvent = event.changedTouches[0]
-    onPickStart(firstTouchPointEvent)
+    onPickMove(firstTouchPointEvent)
 }
 
-onmousedown = (event) => {
+onmousemove = (event) => {
     event.preventDefault()
-    onPickStart(event)
+    onPickMove(event)
 }
 
 const onPickMove = (event) => {
@@ -84,16 +95,6 @@ const onPickMove = (event) => {
     }
 
     userEventHandlers.onPickChipMove(mouseMoveShift)
-}
-
-const ontouchmove = (event) => {
-    let firstTouchPointEvent = event.changedTouches[0]
-    onPickMove(firstTouchPointEvent)
-}
-
-onmousemove = (event) => {
-    event.preventDefault()
-    onPickMove(event)
 }
 
 const ontouchend = (event) => {
@@ -192,6 +193,8 @@ const userEventHandlers = {
         hasNextPosition = game.setNextPosition(chipIndex)
 
         if ( hasNextPosition ) {
+            game.stepCounter++
+            view.updateStepCounter()
             view.defineMovingElements(chipPickedIndex)
         }
     },

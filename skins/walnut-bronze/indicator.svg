@@ -1,0 +1,48 @@
+<svg
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   width="120"
+   height="70"
+   viewBox="0 0 31.749999 18.520834">
+  <defs>
+    <linearGradient
+       id="linearGradient848">
+      <stop
+         style="stop-color:#5e3e28;stop-opacity:1"
+         offset="0" />
+      <stop
+         style="stop-color:#100803;stop-opacity:1"
+         offset="1" />
+    </linearGradient>
+    <linearGradient
+       xlink:href="#linearGradient848"
+       id="linearGradient850"
+       x1="0"
+       y1="278.47916"
+       x2="4.8191953"
+       y2="291.89728"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(2.645834,-275.83332)" />
+    <filter
+       style="color-interpolation-filters:sRGB"
+       id="filter1575">
+      <feGaussianBlur
+         stdDeviation="1.1 1.1"
+         result="blur" />
+    </filter>
+  </defs>
+  <rect
+     ry="4.0995951"
+     y="2.6458194"
+     x="2.645834"
+     height="13.229167"
+     width="26.458332"
+     style="filter:url(#filter1575)" />
+  <rect
+     ry="4.0995951"
+     y="2.6458194"
+     x="2.645834"
+     height="13.229167"
+     width="26.458332"
+     style="fill:#6b3815;stroke:url(#linearGradient850);stroke-width:1.05833328" />
+</svg>
