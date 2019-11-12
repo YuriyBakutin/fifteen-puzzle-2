@@ -250,18 +250,39 @@ export const skin = {
         width: 100,
         height: 50,
         picture: {
-            width: 256,
-            height: 100,
             url: 'indicator.svg',
         },
         label: {
-
+            // Notation ??...?? for replace by actual data
+            // See view.renderElement()
+            svg: `
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="??width??"
+                height="??height??"
+                viewBox="0 0 31.749999 18.520834">
+                <defs>
+                    <style type="text/css">
+                        <![CDATA[
+                            @font-face {
+                                font-family: Aspergit;
+                                src: url('??skinUrl??fonts/aspergit.woff2');
+                            }
+                        ]]>
+                    </style>
+                </defs>
+                <text
+                    y="13.5"
+                    x="15.880168"
+                    style="font-weight:bold;font-size:11px;font-family:Aspergit;text-align:center;text-anchor:middle;fill:#ff6600;fill-opacity:0.82773108"
+                    xml:space="preserve">??text??</text>
+            </svg>` + '\n'
         },
         stepCounter: {
             width: 'view.skin.indicators.width',
             height: 'view.skin.indicators.height',
             left: 100,
-            top: 0
+            top: 24
         },
         timeCounter: {
             width: 'view.skin.indicators.width',
