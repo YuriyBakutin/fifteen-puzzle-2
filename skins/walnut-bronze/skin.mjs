@@ -249,7 +249,7 @@ export const skin = {
     indicators: {
         width: 120,
         height: 70,
-        picture: {
+        board: {
             url: 'indicator.svg',
         },
         label: {
@@ -290,6 +290,5 @@ export const skin = {
             right: 'view.skin.indicators.timeCounter.left',
             top: 'view.skin.indicators.timeCounter.top'
         }
-    }
-
+    },
 }
