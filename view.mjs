@@ -13,6 +13,8 @@ export const view = {
     CONTROL_Z_INDEX: 5,
     TEXT_Z_INDEX: 6,
     MOVING_BY_GAME_STEP_DURATION: 0.5,
+    MAX_SIZE_MM: 150,
+    maxSizePx: null,
     clientWidth: null,
     clientHeight: null,
     PORTRAIT: 0,
@@ -41,8 +43,8 @@ export const view = {
     },
 
     rescale() {
-        let xScale = (view.clientWidth - game.numberOfColumns - 1) / view.resolve(view.skin.frame.width)
-        let yScale = (view.clientHeight - game.numberOfRows - 1) / view.resolve(view.skin.frame.height)
+        let xScale = Math.min(view.clientWidth, view.maxSizePx - 2) / view.resolve(view.skin.frame.width)
+        let yScale = Math.min(view.clientHeight, view.maxSizePx - 2) / view.resolve(view.skin.frame.height)
         view.scale = xScale < yScale ? xScale : yScale
 
         const objectRescale = (obj) => {

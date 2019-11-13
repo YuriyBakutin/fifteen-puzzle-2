@@ -4,6 +4,11 @@ import { game } from './game.mjs'
 'use strict'
 
 onload = async () => {
+    const STANDARD_DPI = 96
+    const INCH_PER_MM = 0.039
+    const ratio = devicePixelRatio || 1
+    view.maxSizePx = view.MAX_SIZE_MM * STANDARD_DPI * INCH_PER_MM * ratio
+    console.log('view.maxSizePx: ', view.maxSizePx)
 
     let { skins } = await import('./skins/skins.mjs')
     view.skinsRef = skins
