@@ -249,7 +249,9 @@ export const skin = {
     indicators: {
         width: 100,
         height: 50,
-        picture: {
+        board: {
+            width: 256,
+            height: 100,
             url: 'indicator.svg',
         },
         label: {

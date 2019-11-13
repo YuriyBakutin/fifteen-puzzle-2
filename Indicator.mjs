@@ -7,20 +7,20 @@ export class Indicator {
     constructor(argsObject) {
         let {skinElement, text} = argsObject
 
-        this.stepCounterFrameElement_ = view.renderElement({
+        this.frameElement_ = view.renderElement({
             skinElement,
             tagName: 'div',
             zIndex: view.CONTROL_Z_INDEX
         })
 
         view.renderElement({
-            skinElement: view.skin.indicators.picture,
-            parentElement: this.stepCounterFrameElement_,
+            skinElement: view.skin.indicators.board,
+            parentElement: this.frameElement_,
         })
 
         this.labelElement = view.renderElement({
             skinElement: view.skin.indicators.label,
-            parentElement: this.stepCounterFrameElement_,
+            parentElement: this.frameElement_,
             text
         })
     }
@@ -29,7 +29,7 @@ export class Indicator {
         this.labelElement.remove()
         this.labelElement = view.renderElement({
             skinElement: view.skin.indicators.label,
-            parentElement: this.stepCounterFrameElement_,
+            parentElement: this.frameElement_,
             text
         })
     }
